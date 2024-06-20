@@ -1,0 +1,29 @@
+.sidebar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 15%;
+    background-color:#25498E;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    font-size: 22px;
+    text-align: center;
+  }
+  
+  .item a {
+    display: block;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+  }
+  
+  .item a.active {
+    background-color: #1E90FF;
+    color: white;
+  }
+  
+  .item a:hover:not(.active) {
+    background-color: #1E90FF;
+    color: white;
+  }
