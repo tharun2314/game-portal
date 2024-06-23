@@ -3,7 +3,7 @@ import Snake from "./Snake";
 import Food from "./Food";
 import Button from "./Button";
 import Menu from "./Menu";
-import "./snakegame.css"
+import "./snakegame.css";
 import QuestionModal from "../QuestionModal";
 
 const getRandomFood = () => {
@@ -19,9 +19,12 @@ const initialState = {
   direction: "RIGHT",
   speed: 100,
   route: "menu",
-  snakeDots: [[0, 0], [0, 2]],
-  score:0,
-  showQuiz:false
+  snakeDots: [
+    [0, 0],
+    [0, 2],
+  ],
+  score: 0,
+  showQuiz: false,
 };
 let startGame;
 let stopGame;
@@ -33,7 +36,7 @@ class Snakegame extends Component {
   }
 
   componentDidMount() {
-    startGame=setInterval(this.moveSnake, this.state.speed);
+    startGame = setInterval(this.moveSnake, this.state.speed);
     document.onkeydown = this.onKeyDown;
   }
 
@@ -41,13 +44,12 @@ class Snakegame extends Component {
     this.onSnakeOutOfBounds();
     this.onSnakeCollapsed();
     this.onSnakeEats();
-    if(this.state.showQuiz)
-      {
-        clearInterval(startGame);
-      }
+    if (this.state.showQuiz) {
+      clearInterval(startGame);
+    }
   }
 
-  onKeyDown = e => {
+  onKeyDown = (e) => {
     e = e || window.event;
     switch (e.keyCode) {
       case 37:
@@ -86,7 +88,7 @@ class Snakegame extends Component {
       dots.push(head);
       dots.shift();
       this.setState({
-        snakeDots: dots
+        snakeDots: dots,
       });
     }
   };
@@ -104,7 +106,7 @@ class Snakegame extends Component {
     let snake = [...this.state.snakeDots];
     let head = snake[snake.length - 1];
     snake.pop();
-    snake.forEach(dot => {
+    snake.forEach((dot) => {
       if (head[0] == dot[0] && head[1] == dot[1]) {
         this.gameOver();
       }
@@ -115,22 +117,23 @@ class Snakegame extends Component {
     let head = this.state.snakeDots[this.state.snakeDots.length - 1];
     let food = this.state.food;
     if (head[0] == food[0] && head[1] == food[1]) {
-      console.log("I am heree")
- this.setState((prevState) => ({
-  food: getRandomFood(),
-  score: prevState.score + 1,
-}), () => {
-  if(this.state.score %2==0)
-    {
-      this.setState({
-        showQuiz:true,
-      })
-    }
-    else{
-      this.increaseSnake();
-      this.increaseSpeed();
-    }
-});
+      console.log("I am heree");
+      this.setState(
+        (prevState) => ({
+          food: getRandomFood(),
+          score: prevState.score + 1,
+        }),
+        () => {
+          if (this.state.score % 2 == 0) {
+            this.setState({
+              showQuiz: true,
+            });
+          } else {
+            this.increaseSnake();
+            this.increaseSpeed();
+          }
+        }
+      );
     }
   }
 
@@ -138,21 +141,21 @@ class Snakegame extends Component {
     let newSnake = [...this.state.snakeDots];
     newSnake.unshift([]);
     this.setState({
-      snakeDots: newSnake
+      snakeDots: newSnake,
     });
   }
 
   increaseSpeed() {
     if (this.state.speed > 10) {
       this.setState({
-        speed: this.state.speed - 20
+        speed: this.state.speed - 20,
       });
     }
   }
 
   onRouteChange = () => {
     this.setState({
-      route: "game"
+      route: "game",
     });
   };
 
@@ -170,7 +173,7 @@ class Snakegame extends Component {
     dots.shift();
     this.setState({
       direction: "DOWN",
-      snakeDots: dots
+      snakeDots: dots,
     });
   };
 
@@ -183,7 +186,7 @@ class Snakegame extends Component {
     dots.shift();
     this.setState({
       direction: "UP",
-      snakeDots: dots
+      snakeDots: dots,
     });
   };
 
@@ -196,7 +199,7 @@ class Snakegame extends Component {
     dots.shift();
     this.setState({
       direction: "RIGHT",
-      snakeDots: dots
+      snakeDots: dots,
     });
   };
 
@@ -209,23 +212,21 @@ class Snakegame extends Component {
     dots.shift();
     this.setState({
       direction: "LEFT",
-      snakeDots: dots
+      snakeDots: dots,
     });
   };
-  closeModal=(data)=>{
-    let updatedScore=this.state.score;
-    console.log("I am hereee in closeModal")
-    console.log("state speed",this.state.speed)
-    startGame=setInterval(this.moveSnake,this.state.speed)
-    if(data=1)
-      {
-            updatedScore=this.state.score +10
-      }
-     this.setState({showQuiz:false,score:updatedScore})
+  closeModal = (data) => {
+    let updatedScore = this.state.score;
+    console.log("I am hereee in closeModal");
+    console.log("state speed", this.state.speed);
+    startGame = setInterval(this.moveSnake, this.state.speed);
+    if ((data = 1)) {
+      updatedScore = this.state.score + 10;
+    }
+    this.setState({ showQuiz: false, score: updatedScore });
   };
   render() {
-    
-    const { route, snakeDots, food,score } = this.state;
+    const { route, snakeDots, food, score } = this.state;
     return (
       <div>
         {route === "menu" ? (
@@ -241,7 +242,7 @@ class Snakegame extends Component {
             <div>Score:{score}</div>
           </div>
         )}
-        {this.state.showQuiz && <QuestionModal onClose={this.closeModal}/>}
+        <QuestionModal open={this.state.showQuiz} onClose={this.closeModal} />
       </div>
     );
   }
