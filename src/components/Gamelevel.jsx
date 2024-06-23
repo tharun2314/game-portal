@@ -56,7 +56,6 @@ return (
       >
           <ModalDialog layout="center">
           <Typography id="modal-modal-title"component="h1">Select Game level</Typography>
-    <ModalClose onClick={handleCloseModal} />
     <Button
     id="easy"
               fullWidth

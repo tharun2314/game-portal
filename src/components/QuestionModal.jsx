@@ -18,7 +18,7 @@ import axios from "../Axios";
 const QuestionModal = ({
   questionData,
   onClose,
-  maxSecs = 30,
+  maxSecs = 200,
 }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -49,6 +49,7 @@ const QuestionModal = ({
   }, [maxSecs, remainingSecs]);
 
   const handleOptionChange = (event) => {
+    console.log("i am heree")
     setSelectedOption(parseInt(event.target.value));
   };
 
