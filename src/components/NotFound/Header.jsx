@@ -11,6 +11,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 // import "./Header.css"
 import Logo from "../../images/Logo.png"
+import ManageProfile from '../ManageProfile';
 
 export default function Header() {
 
@@ -25,12 +26,18 @@ export default function Header() {
 //     }
 const [anchorEl, setAnchorEl] = React.useState(null);
 const open = Boolean(anchorEl);
+const [openModal,setOpenModal]=React.useState(false);
 const handleClick = (event) => {
   setAnchorEl(event.currentTarget);
 };
 const handleClose = () => {
+setOpenModal(true);
   setAnchorEl(null);
 };
+
+const handleCloseModal=()=>{
+    setOpenModal(false);
+}
     return (
         <>
         <Box sx={{ flexGrow: 1 }}>
@@ -74,6 +81,7 @@ const handleClose = () => {
                 </Toolbar>
             </AppBar>
         </Box>
+        {<ManageProfile open={openModal} handleCloseModal={handleCloseModal}/>}
         </>
     );
 }

@@ -22,9 +22,7 @@ const QuestionModal = ({
     question: "What is the capital of France?",
     options: ["London", "Paris", "Berlin", "Madrid"],
   },
-  onClose = () => {
-    console.log("i am getting closed");
-  },
+  onClose,
   maxSecs = 30,
 }) => {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -33,7 +31,8 @@ const QuestionModal = ({
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    console.log("i am hereee bro")
+    const timer = setInterval(() => {
       setRemainingSecs((prevSecs) =>
         prevSecs < maxSecs ? prevSecs + 1 : prevSecs
       );
@@ -72,10 +71,18 @@ const QuestionModal = ({
         difficulty: questionData.difficulty,
       })
       .then((res) => {
-        console.log(res);
+        if(res?.data?.isCorrect==true){
+          onClose(1)
+        }
+        else
+        {
+          onClose(0);
+        }
+       
       })
       .catch((err) => {
         console.log(err);
+        onClose(0);
       })
       .finally(() => {
         setIsSubmitting(false);

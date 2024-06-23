@@ -23,15 +23,21 @@ export default function BasicCard(props) {
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
-        <Typography sx={{ fontSize: 18 }} color="text.primary" gutterBottom>
+        <Typography variant="headline" sx={{ fontSize: 18 }} color="text.primary" gutterBottom>
          {props.name}
         </Typography>
-      <img src={props.component}/>
-        <Typography variant="body2">
+        <Typography component="div">
+        <img src={props.component} style={{width:300,height:200}}/>
+        </Typography>
+  
+        <Typography component="p">
         {props.description}
         </Typography>
       </CardContent>
+      <CardActions>
       <Button variant="contained" onClick={props.onClick}>Play</Button>
+        </CardActions>
+   
     </Card>
   );
 }

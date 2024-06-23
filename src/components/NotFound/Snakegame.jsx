@@ -4,6 +4,7 @@ import Food from "./Food";
 import Button from "./Button";
 import Menu from "./Menu";
 import "./snakegame.css"
+import QuestionModal from "../QuestionModal";
 
 const getRandomFood = () => {
   let min = 1;
@@ -18,8 +19,12 @@ const initialState = {
   direction: "RIGHT",
   speed: 100,
   route: "menu",
-  snakeDots: [[0, 0], [0, 2]]
+  snakeDots: [[0, 0], [0, 2]],
+  score:0,
+  showQuiz:false
 };
+let startGame;
+let stopGame;
 
 class Snakegame extends Component {
   constructor() {
@@ -28,7 +33,7 @@ class Snakegame extends Component {
   }
 
   componentDidMount() {
-    setInterval(this.moveSnake, this.state.speed);
+    startGame=setInterval(this.moveSnake, this.state.speed);
     document.onkeydown = this.onKeyDown;
   }
 
@@ -36,6 +41,10 @@ class Snakegame extends Component {
     this.onSnakeOutOfBounds();
     this.onSnakeCollapsed();
     this.onSnakeEats();
+    if(this.state.showQuiz)
+      {
+        clearInterval(startGame);
+      }
   }
 
   onKeyDown = e => {
@@ -106,11 +115,22 @@ class Snakegame extends Component {
     let head = this.state.snakeDots[this.state.snakeDots.length - 1];
     let food = this.state.food;
     if (head[0] == food[0] && head[1] == food[1]) {
+      console.log("I am heree")
+ this.setState((prevState) => ({
+  food: getRandomFood(),
+  score: prevState.score + 1,
+}), () => {
+  if(this.state.score %2==0)
+    {
       this.setState({
-        food: getRandomFood()
-      });
+        showQuiz:true,
+      })
+    }
+    else{
       this.increaseSnake();
       this.increaseSpeed();
+    }
+});
     }
   }
 
@@ -192,8 +212,20 @@ class Snakegame extends Component {
       snakeDots: dots
     });
   };
+  closeModal=(data)=>{
+    let updatedScore=this.state.score;
+    console.log("I am hereee in closeModal")
+    console.log("state speed",this.state.speed)
+    startGame=setInterval(this.moveSnake,this.state.speed)
+    if(data=1)
+      {
+            updatedScore=this.state.score +10
+      }
+     this.setState({showQuiz:false,score:updatedScore})
+  };
   render() {
-    const { route, snakeDots, food } = this.state;
+    
+    const { route, snakeDots, food,score } = this.state;
     return (
       <div>
         {route === "menu" ? (
@@ -206,8 +238,10 @@ class Snakegame extends Component {
               <Snake snakeDots={snakeDots} />
               <Food dot={food} />
             </div>
+            <div>Score:{score}</div>
           </div>
         )}
+        {this.state.showQuiz && <QuestionModal onClose={this.closeModal}/>}
       </div>
     );
   }
