@@ -1,4 +1,3 @@
-
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect,useState} from 'react';
 import { Player } from './Player';
@@ -51,20 +50,23 @@ function Shootergame() {
     //   let myscore=localStorage.getItem("score")
     //   player.setScore(myscore,ctx)
 
-      const random = randomNumber(0,700);
-      if(meteors.length < maxMeteorCount && (Date.now() - lastMeteorSpawnAt) > 1500){
-        meteors.push(new Meteor(random,-200));
+      const random = randomNumber(0, 700);
+      if (
+        meteors.length < maxMeteorCount &&
+        Date.now() - lastMeteorSpawnAt > 1500
+      ) {
+        meteors.push(new Meteor(random, -200));
         lastMeteorSpawnAt = Date.now();
       }
 
       meteors = meteors.filter((enemy) => !enemy.dead);
-      meteors.forEach(meteor => {
-        meteor.update(player,bullets);
+      meteors.forEach((meteor) => {
+        meteor.update(player, bullets);
         meteor.draw(ctx);
       });
 
       bullets = bullets.filter((bullet) => !bullet.dead);
-      bullets.forEach(bullet => {
+      bullets.forEach((bullet) => {
         bullet.update();
         bullet.draw(ctx);
       });
@@ -76,6 +78,7 @@ function Shootergame() {
             let score=localStorage.getItem("score") || 0
             localStorage.setItem("score",score+70)
           setShowQuiz(true)
+        
 
         }
   
@@ -102,7 +105,6 @@ function Shootergame() {
         </div>
         {showQuiz && <QuestionModal onClose={close} questionData={items?.questions[i]}/>}
     </div>
-   
   );
 }
 

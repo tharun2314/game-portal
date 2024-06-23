@@ -3,7 +3,7 @@ import Snake from "./Snake";
 import Food from "./Food";
 import Button from "./Button";
 import Menu from "./Menu";
-import "./snakegame.css"
+import "./snakegame.css";
 import QuestionModal from "../QuestionModal";
 import { useSelector, useDispatch } from 'react-redux';
 import { connect } from 'react-redux'
@@ -36,7 +36,7 @@ class Snakegame extends Component {
   }
 
   componentDidMount() {
-    startGame=setInterval(this.moveSnake, this.state.speed);
+    startGame = setInterval(this.moveSnake, this.state.speed);
     document.onkeydown = this.onKeyDown;
   }
 
@@ -44,13 +44,12 @@ class Snakegame extends Component {
     this.onSnakeOutOfBounds();
     this.onSnakeCollapsed();
     this.onSnakeEats();
-    if(this.state.showQuiz)
-      {
-        clearInterval(startGame);
-      }
+    if (this.state.showQuiz) {
+      clearInterval(startGame);
+    }
   }
 
-  onKeyDown = e => {
+  onKeyDown = (e) => {
     e = e || window.event;
     switch (e.keyCode) {
       case 37:
@@ -89,7 +88,7 @@ class Snakegame extends Component {
       dots.push(head);
       dots.shift();
       this.setState({
-        snakeDots: dots
+        snakeDots: dots,
       });
     }
   };
@@ -107,7 +106,7 @@ class Snakegame extends Component {
     let snake = [...this.state.snakeDots];
     let head = snake[snake.length - 1];
     snake.pop();
-    snake.forEach(dot => {
+    snake.forEach((dot) => {
       if (head[0] == dot[0] && head[1] == dot[1]) {
         this.gameOver();
       }
@@ -118,22 +117,23 @@ class Snakegame extends Component {
     let head = this.state.snakeDots[this.state.snakeDots.length - 1];
     let food = this.state.food;
     if (head[0] == food[0] && head[1] == food[1]) {
-      console.log("I am heree")
- this.setState((prevState) => ({
-  food: getRandomFood(),
-  score: prevState.score + 1,
-}), () => {
-  if(this.state.score %2==0)
-    {
-      this.setState({
-        showQuiz:true,
-      })
-    }
-    else{
-      this.increaseSnake();
-      this.increaseSpeed();
-    }
-});
+      console.log("I am heree");
+      this.setState(
+        (prevState) => ({
+          food: getRandomFood(),
+          score: prevState.score + 1,
+        }),
+        () => {
+          if (this.state.score % 2 == 0) {
+            this.setState({
+              showQuiz: true,
+            });
+          } else {
+            this.increaseSnake();
+            this.increaseSpeed();
+          }
+        }
+      );
     }
   }
 
@@ -141,21 +141,21 @@ class Snakegame extends Component {
     let newSnake = [...this.state.snakeDots];
     newSnake.unshift([]);
     this.setState({
-      snakeDots: newSnake
+      snakeDots: newSnake,
     });
   }
 
   increaseSpeed() {
     if (this.state.speed > 10) {
       this.setState({
-        speed: this.state.speed - 20
+        speed: this.state.speed - 20,
       });
     }
   }
 
   onRouteChange = () => {
     this.setState({
-      route: "game"
+      route: "game",
     });
     console.log(this.props.items,"data")
   };
@@ -174,7 +174,7 @@ class Snakegame extends Component {
     dots.shift();
     this.setState({
       direction: "DOWN",
-      snakeDots: dots
+      snakeDots: dots,
     });
   };
 
@@ -187,7 +187,7 @@ class Snakegame extends Component {
     dots.shift();
     this.setState({
       direction: "UP",
-      snakeDots: dots
+      snakeDots: dots,
     });
   };
 
@@ -200,7 +200,7 @@ class Snakegame extends Component {
     dots.shift();
     this.setState({
       direction: "RIGHT",
-      snakeDots: dots
+      snakeDots: dots,
     });
   };
 
@@ -213,7 +213,7 @@ class Snakegame extends Component {
     dots.shift();
     this.setState({
       direction: "LEFT",
-      snakeDots: dots
+      snakeDots: dots,
     });
   };
   closeModal=(data)=>{
@@ -224,11 +224,11 @@ class Snakegame extends Component {
     if(data=1)
       {
             updatedScore=this.state.score +10
-      }
-     this.setState(prevState=>({showQuiz:false,score:updatedScore,i:prevState?.i+1}))
+      }    
+       this.setState(prevState=>({showQuiz:false,score:updatedScore,i:prevState?.i+1}))
   };
   render() {
-    console.log(this.props.items.questions)
+    
     const { route, snakeDots, food,score } = this.state;
     return (
       <div>
@@ -245,7 +245,7 @@ class Snakegame extends Component {
             <div>Score:{score}</div>
           </div>
         )}
-        {this.state.showQuiz && <QuestionModal onClose={this.closeModal} questionData={this.props.items?.questions[this.state.i]}/>}
+ {this.state.showQuiz && <QuestionModal onClose={this.closeModal} questionData={this.props.items?.questions[this.state.i]}/>}
       </div>
     );
   }

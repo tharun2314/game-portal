@@ -26,7 +26,7 @@ const QuestionModal = ({
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    console.log("i am hereee bro")
+    console.log("i am hereee bro");
     const timer = setInterval(() => {
       setRemainingSecs((prevSecs) =>
         prevSecs < maxSecs ? prevSecs + 1 : prevSecs
@@ -67,14 +67,11 @@ const QuestionModal = ({
         difficulty: questionData.difficulty,
       })
       .then((res) => {
-        if(res?.data?.isCorrect==true){
-          onClose(1)
-        }
-        else
-        {
+        if (res?.data?.isCorrect == true) {
+          onClose(1);
+        } else {
           onClose(0);
         }
-       
       })
       .catch((err) => {
         console.log(err);
@@ -86,7 +83,7 @@ const QuestionModal = ({
   };
 
   return (
-    <Dialog open onClose={onClose} fullWidth>
+    <Dialog open={true} onClose={onClose} fullWidth>
       <DialogTitle>{questionData.question}</DialogTitle>
       <DialogContent>
         <FormControl component="fieldset">
