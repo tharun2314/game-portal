@@ -6,6 +6,7 @@ import Login from "./Pages/Login";
 import QuestionModal from "./components/QuestionModal";
 import Shootergame from "./components/Shootergame";
 import Snakegame from "./components/NotFound/Snakegame";
+import ShooterGameWrapper from "./components/NotFound/ShooterGameWrapper";
 
 const AppRoutes = () => {
   return (
@@ -14,7 +15,7 @@ const AppRoutes = () => {
       <Route path="/signup" element={<SignUp />}></Route>
       <Route path="/home" element={<HomePage />} />
       <Route path="/custom-modal" element={<QuestionModal />} />
-      <Route path='/shooter-game' element={<Shootergame/>}/>
+      <Route path='/shooter-game' element={<ShooterGameWrapper/>}/>
       <Route path='/snake-game' element={<Snakegame/>}/>
     </Routes>
   );

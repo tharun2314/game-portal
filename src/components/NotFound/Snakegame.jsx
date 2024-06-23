@@ -5,7 +5,9 @@ import Button from "./Button";
 import Menu from "./Menu";
 import "./snakegame.css"
 import QuestionModal from "../QuestionModal";
-
+import { useSelector, useDispatch } from 'react-redux';
+import { connect } from 'react-redux'
+import { addItem, removeItem, updateItem } from '../actions/itemActions';
 const getRandomFood = () => {
   let min = 1;
   let max = 98;
@@ -21,14 +23,15 @@ const initialState = {
   route: "menu",
   snakeDots: [[0, 0], [0, 2]],
   score:0,
-  showQuiz:false
+  showQuiz:false,
+  i:0
 };
 let startGame;
 let stopGame;
 
 class Snakegame extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = initialState;
   }
 
@@ -154,6 +157,7 @@ class Snakegame extends Component {
     this.setState({
       route: "game"
     });
+    console.log(this.props.items,"data")
   };
 
   gameOver() {
@@ -221,10 +225,10 @@ class Snakegame extends Component {
       {
             updatedScore=this.state.score +10
       }
-     this.setState({showQuiz:false,score:updatedScore})
+     this.setState(prevState=>({showQuiz:false,score:updatedScore,i:prevState?.i+1}))
   };
   render() {
-    
+    console.log(this.props.items.questions)
     const { route, snakeDots, food,score } = this.state;
     return (
       <div>
@@ -241,10 +245,18 @@ class Snakegame extends Component {
             <div>Score:{score}</div>
           </div>
         )}
-        {this.state.showQuiz && <QuestionModal onClose={this.closeModal}/>}
+        {this.state.showQuiz && <QuestionModal onClose={this.closeModal} questionData={this.props.items?.questions[this.state.i]}/>}
       </div>
     );
   }
 }
 
-export default Snakegame;
+const mapStateToProps = state => ({
+  items: state.example.items
+});
+
+const mapDispatchToProps = {
+  addItem,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Snakegame);

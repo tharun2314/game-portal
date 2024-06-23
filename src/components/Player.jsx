@@ -61,8 +61,15 @@ export class Player{
         ctx.fillStyle = "lightgreen";
         ctx.fillText(`Score: ${this.score}`, 15, 25);
     }
+    setScore=(score,ctx)=>
+        {
+            this.score=score;
+            ctx.fillText(`Score: ${this.score}`, 15, 25);
+        }
+         
 }
 
+     
 
 function gameOver(score) {
     document.body.innerHTML = `

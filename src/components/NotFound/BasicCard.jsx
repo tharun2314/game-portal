@@ -21,7 +21,7 @@ const bull = (
 
 export default function BasicCard(props) {
   return (
-    <Card sx={{ minWidth: 275 }}>
+    <Card sx={{ minWidth: 275 }} id={props.id}>
       <CardContent>
         <Typography variant="headline" sx={{ fontSize: 18 }} color="text.primary" gutterBottom>
          {props.name}
@@ -35,7 +35,7 @@ export default function BasicCard(props) {
         </Typography>
       </CardContent>
       <CardActions>
-      <Button variant="contained" onClick={props.onClick}>Play</Button>
+      <Button variant="contained" onClick={props.onClick} id={props.id}>Play</Button>
         </CardActions>
    
     </Card>

@@ -16,12 +16,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import axios from "../Axios";
 
 const QuestionModal = ({
-  questionData = {
-    id: 1,
-    difficulty: "easy",
-    question: "What is the capital of France?",
-    options: ["London", "Paris", "Berlin", "Madrid"],
-  },
+  questionData,
   onClose,
   maxSecs = 30,
 }) => {
