@@ -18,15 +18,14 @@ import axios from "../Axios";
 const QuestionModal = ({
   questionData,
   onClose,
-  maxSecs = 200,
+  maxSecs = 30,
 }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [remainingSecs, setRemainingSecs] = React.useState(0);
+  const [remainingSecs, setRemainingSecs] = useState(0);
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    console.log("i am hereee bro");
     const timer = setInterval(() => {
       setRemainingSecs((prevSecs) =>
         prevSecs < maxSecs ? prevSecs + 1 : prevSecs
@@ -36,7 +35,7 @@ const QuestionModal = ({
     return () => {
       clearInterval(timer);
     };
-  }, [isSubmitting, maxSecs, onClose]);
+  }, [maxSecs]);
 
   useEffect(() => {
     if (remainingSecs === maxSecs) {
@@ -49,8 +48,7 @@ const QuestionModal = ({
   }, [maxSecs, remainingSecs]);
 
   const handleOptionChange = (event) => {
-    console.log("i am heree")
-    setSelectedOption(parseInt(event.target.value));
+    setSelectedOption(parseInt(event.target.value, 10));
   };
 
   const handleSubmit = () => {
@@ -67,7 +65,7 @@ const QuestionModal = ({
         difficulty: questionData.difficulty,
       })
       .then((res) => {
-        if (res?.data?.isCorrect == true) {
+        if (res?.data?.isCorrect === true) {
           onClose(1);
         } else {
           onClose(0);
@@ -129,7 +127,7 @@ const QuestionModal = ({
             variant="contained"
             color="primary"
             onClick={handleSubmit}
-            disabled={isSubmitting || !selectedOption}
+            disabled={isSubmitting || selectedOption === null}
           >
             Submit
           </Button>
