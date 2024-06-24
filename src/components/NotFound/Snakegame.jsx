@@ -19,7 +19,7 @@ const getRandomFood = () => {
 const initialState = {
   food: getRandomFood(),
   direction: "RIGHT",
-  speed: 100,
+  speed: 100000,
   route: "menu",
   snakeDots: [[0, 0], [0, 2]],
   score:0,
@@ -241,8 +241,9 @@ class Snakegame extends Component {
             <div className="game-area">
               <Snake snakeDots={snakeDots} />
               <Food dot={food} />
+              <div style={{position:"relative",top:'-32px'}}>Score:{score}</div>
             </div>
-            <div>Score:{score}</div>
+         
           </div>
         )}
  {this.state.showQuiz && <QuestionModal onClose={this.closeModal} questionData={this.props.items?.questions[this.state.i]}/>}
