@@ -81,7 +81,7 @@ const handleCloseModal=()=>{
                 </Toolbar>
             </AppBar>
         </Box>
-        {<ManageProfile open={openModal} handleCloseModal={handleCloseModal}/>}
+        {openModal && <ManageProfile open={openModal} handleCloseModal={handleCloseModal}/>}
         </>
     );
 }
