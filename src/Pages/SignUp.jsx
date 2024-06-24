@@ -39,6 +39,8 @@ export default function SignUp() {
     let data = new FormData(event.currentTarget);
     let firstName = data.get('firstName');
     let lastName = data.get('lastName');
+    let password = data.get('password');
+    let confirmPassword = data.get('confirm-password');
 
     // Additional validation for first name and last name
     const namePattern = /^[a-zA-Z]+$/;
@@ -47,9 +49,21 @@ export default function SignUp() {
       return;
     }
 
+    // Password validation
+    const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+    if (!passwordPattern.test(password)) {
+      toast.error('Password must be at least 6 characters long and contain at least one letter, one number, and one special character.');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      toast.error('Passwords do not match.');
+      return;
+    }
+
     data = {
       email: data.get('email'),
-      password: data.get('password'),
+      password: password,
       firstName: firstName,
       lastName: lastName,
       dob: data.get('dob')
