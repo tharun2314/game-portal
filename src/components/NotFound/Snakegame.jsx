@@ -19,7 +19,7 @@ const getRandomFood = () => {
 const initialState = {
   food: getRandomFood(),
   direction: "RIGHT",
-  speed: 100000,
+  speed: 100,
   route: "menu",
   snakeDots: [[0, 0], [0, 2]],
   score:0,
