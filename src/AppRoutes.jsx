@@ -11,7 +11,8 @@ import ShooterGameWrapper from "./components/NotFound/ShooterGameWrapper";
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<Login />}></Route>
+     <Route path="/" element={<Login />} />
+     <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />}></Route>
       <Route path="/home" element={<HomePage />} />
       <Route path="/custom-modal" element={<QuestionModal />} />
