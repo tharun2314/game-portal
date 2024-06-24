@@ -77,6 +77,7 @@ function Shootergame() {
         {
             let score=localStorage.getItem("score") || 0
             localStorage.setItem("score",score+70)
+            clearInterval(myInterval)
           setShowQuiz(true)
         
 
