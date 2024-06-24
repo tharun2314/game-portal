@@ -46,11 +46,12 @@ export default function Login() {
     axios.post(process.env.REACT_APP_BASE_URL+'api/auth/login',data).then((data)=>
         {
           toast.success('Successfully Login')
+          localStorage.setItem("token",data.data.accessToken)
             setTimeout(() => {
                 navigate('/home')
             }, 1000);
             console.log("dataaaa",data)
-            localStorage.setItem("token",data.data.accessToken)
+        
         }).catch((error) => {
           console.log(error)
             toast.error(error.response.data.message);

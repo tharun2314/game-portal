@@ -12,6 +12,9 @@ import MenuItem from '@mui/material/MenuItem';
 // import "./Header.css"
 import Logo from "../../images/Logo.png"
 import ManageProfile from '../ManageProfile';
+import { logout } from '../../services/authservice';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 export default function Header() {
 
@@ -24,6 +27,7 @@ export default function Header() {
 //     const openNav=()=>{
 //         setNav(!nav)
 //     }
+const navigate=useNavigate();
 const [anchorEl, setAnchorEl] = React.useState(null);
 const open = Boolean(anchorEl);
 const [openModal,setOpenModal]=React.useState(false);
@@ -34,6 +38,12 @@ const handleClose = () => {
 setOpenModal(true);
   setAnchorEl(null);
 };
+const handleLogout=()=>
+{
+ logout();
+ toast.success("you have been logged out")
+ navigate('/login');
+}
 
 const handleCloseModal=()=>{
     setOpenModal(false);
@@ -75,7 +85,7 @@ const handleCloseModal=()=>{
                             sx={{width:1/2}}
                         >
                             <MenuItem onClick={handleClose}>Profile</MenuItem>
-                            <MenuItem onClick={handleClose}>Logout</MenuItem>
+                            <MenuItem onClick={handleLogout}>Logout</MenuItem>
                         </Menu>
                     </div>
                 </Toolbar>
