@@ -1,16 +1,17 @@
 import React from "react";
 import "./Menu.css";
+import Button from '@mui/material/Button';
 
 const Menu = ({ onRouteChange }) => {
   return (
     <div className="wrapper">
       <div>
-        <input
+        <Button
+        variant="contained"
+        style={{margin:100}}
           onClick={onRouteChange}
-          className="start"
           type="button"
-          value="start game"
-        />
+          value="start game">Start Game</Button>
       </div>
     </div>
   );
