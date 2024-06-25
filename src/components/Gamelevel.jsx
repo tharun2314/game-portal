@@ -37,7 +37,6 @@ import { useSelector, useDispatch } from 'react-redux';
         Axios.get('/api/get-questions?difficulty='+event.target.id).then(({ data }) => {
             console.log(data)
             console.log(path,"heree")
-            navigate(path);
             dispatch(addItem(data));
           
             setTimeout(()=>{navigate(path)},2000)

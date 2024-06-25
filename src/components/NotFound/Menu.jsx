@@ -6,9 +6,8 @@ const Menu = ({ onRouteChange }) => {
   return (
         <Button
         variant="contained"
-        style={{marginTop:100,width:80}}
+        style={{marginTop:100}}
           onClick={onRouteChange}
-          type="button"
           value="start game">Start Game</Button>
   );
 };

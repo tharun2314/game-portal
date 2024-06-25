@@ -263,9 +263,9 @@ this.props.handleNavigate();
     const { route, snakeDots, food, score } = this.state;
     return (
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: "center" }}>
-        <div style={{ display: 'flex', flexDirection: 'row', alignItems: "center" }}>
+        <div style={{ display: 'flex', flexDirection: 'row', alignItems: "center",gap:5 }}>
           <Menu onRouteChange={this.onRouteChange} />
-          <Button onClick={this.closeGame}>Close Game</Button>
+          <Button style={{marginTop:100}}variant='contained' onClick={this.closeGame}>Close Game</Button>
         </div>
 
         <div className="game-area">

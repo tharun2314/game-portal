@@ -1,16 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect,useState} from 'react';
-import { Player } from './Player';
+import React, { useEffect,useState,useRef} from 'react';
+import Player  from './Player';
 import bg from '../images/space.jpg';
 import { Meteor } from './Meteor'
 import { Bullet } from './Bullet';
 import QuestionModal from './QuestionModal';
 import { create } from '@mui/material/styles/createTransitions';
 import { useSelector, useDispatch } from 'react-redux';
+import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 
 function Shootergame() {
     const items = useSelector(state => state.example.items);
+    const score=useRef(0);
     console.log(items)
   let canvas;
   let ctx;
@@ -18,7 +21,6 @@ function Shootergame() {
   let lastMeteorSpawnAt = Date.now();
   const [showQuiz,setShowQuiz]=useState(false);
   const [i,setI]=useState(0);
-  const [score,setScore]=useState(0)
   let timer=0;
   const player = new Player(950 / 2,550 / 1.5)
   const randomNumber = (min,max) => Math.random() * max + min;
@@ -26,6 +28,7 @@ function Shootergame() {
   let visited=0;
   let scoree=0;
   let element=document.getElementById("score")
+  const navigate=useNavigate();
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     canvas = document.getElementById("myCanvas");
@@ -42,11 +45,16 @@ function Shootergame() {
       ctx.clearRect(0,0,950,550);
       
       player.update(fireBulletcb);
+      player.draw(ctx);
     //   setScore((prev)=>{
     //     if(prev!=player.score)
     //         return player.score
     //   })
-      player.draw(ctx);
+    if(score.current!=0 && player.score==0)
+      {
+        player.setScore(parseInt(score.current*50+10),ctx);
+      }
+      
     //   let myscore=localStorage.getItem("score")
     //   player.setScore(myscore,ctx)
 
@@ -75,8 +83,8 @@ function Shootergame() {
       let prevScore=player.score
       if(player.score%50==0 && player.score!=0 && player.score==prevScore)
         {
-            let score=localStorage.getItem("score") || 0
-            localStorage.setItem("score",score+70)
+            // let score=localStorage.getItem("score") || 0
+            score.current=parseInt(score.current)+1
             clearInterval(myInterval)
           setShowQuiz(true)
         
@@ -84,6 +92,7 @@ function Shootergame() {
         }
   
     }, 80);
+   
 }
   })
   const close=()=>{
@@ -92,17 +101,20 @@ function Shootergame() {
 
   }
 
-  useEffect(()=>{
-
-  })
+  const handleClose=()=>
+  {
+navigate('/home')
+  }
   return (
 
     <div style={{
-    display:'flex',justifyContent:'center',alignItems:'center',height:'100%',flexDirection:'row'
+    display:'flex',justifyContent:'center',alignItems:'center',height:'100%',flexDirection:'column'
     }}>
+      <Button variant="contained" style={{marginTop:50}} onClick={handleClose}>Close Game</Button>
         <canvas id="myCanvas" width="950" height="550" style={{backgroundImage: `url(${bg})`,backgroundSize:"cover" ,border:'2px solid #000000',marginTop:'48px'}}/>
 
         {showQuiz && <QuestionModal onClose={close} questionData={items?.questions[i]}/>}
+
     </div>
   );
 }
