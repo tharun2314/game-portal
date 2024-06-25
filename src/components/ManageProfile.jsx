@@ -29,6 +29,7 @@ import Axios from '../Axios';
 
 
 
+
 export default function ManageProfile({open,handleCloseModal})
 {
     const [email,setEmail]=useState('');
@@ -40,107 +41,113 @@ export default function ManageProfile({open,handleCloseModal})
          setEmail(data.email)
          setFirstName(data.firstName);
          setLastName(data.lastName)
-         setdob(data.dob);
+         setdob(data.classId);
   
       }).catch(({ response }) => {
       })  },[])
 
       const handleSubmit=()=>{
-        Axios.put('/api/update-profile-details',{email,firstName,lastName,dob}).then(({ data }) => {
-        handleCloseModal()
+        Axios.put('/api/update-profile-details',{email,firstName,lastName,classId:dob}).then(({ data }) => {
+          toast.success('Successfully Updated Profile');
+          setTimeout(()=>{
+            handleCloseModal()
+          },2000)
+      
      
          }).catch(({ response }) => {
+          toast.error(response.error.message)
          })
 
       }
 
 return (
-    <Modal
-        open={open}
-        // onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-          <ModalDialog layout="center">
-          <Typography id="modal-modal-title"component="h1">Manage Profile</Typography>
-    <ModalClose onClick={handleCloseModal} />
-    <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  value={firstName}
-                  autoFocus 
-                  onChange={(event) => {
-                    setFirstName(event.target.value);
-                  }}
-                 />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name" 
-                 value={lastName}
-                onChange={(event) => {
-                    setLastName(event.target.value);
-                  }}/>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"  
-                value={email} disabled />
-              
-              </Grid>
-              <Grid item xs={12} sm={6}>
-              <TextField
-                  required
-                  fullWidth
-                  id="class-id"
-                  label="Class ID"
-                  name="class-id"
-                  value={dob}
-                   />
-             
-              </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              onClick={handleSubmit}
-            >Submit</Button>
+  <><div><Toaster /></div><Modal
+    open={open}
+    // onClose={handleClose}
+    aria-labelledby="modal-modal-title"
+    aria-describedby="modal-modal-description"
+  >
+    <ModalDialog layout="center">
+      <Typography id="modal-modal-title" component="h1">Manage Profile</Typography>
+      <ModalClose onClick={handleCloseModal} />
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            autoComplete="given-name"
+            name="firstName"
+            required
+            fullWidth
+            id="firstName"
+            label="First Name"
+            value={firstName}
+            autoFocus
+            onChange={(event) => {
+              setFirstName(event.target.value);
+            } } />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            fullWidth
+            id="lastName"
+            label="Last Name"
+            name="lastName"
+            autoComplete="family-name"
+            value={lastName}
+            onChange={(event) => {
+              setLastName(event.target.value);
+            } } />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            value={email} disabled />
 
-  </ModalDialog>
-        {/* <Card>
-            <CardContent>
-            <Box component="form" noValidate  sx={{ mt: 3 }}>
-            
-             Update
-            </Button>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-             Close
-            </Button>
-          </Box></CardContent>
-                  </Card> */}
-      </Modal>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            fullWidth
+            id="class-id"
+            label="Class ID"
+            name="classId"
+            value={dob}
+            onChange={(event) => {
+              setdob(event.target.value);
+            } } />
+
+        </Grid>
+      </Grid>
+      <Button
+        type="submit"
+        fullWidth
+        variant="contained"
+        sx={{ mt: 3, mb: 2 }}
+        onClick={handleSubmit}
+      >Submit</Button>
+
+    </ModalDialog>
+    {/* <Card>
+        <CardContent>
+        <Box component="form" noValidate  sx={{ mt: 3 }}>
+        
+         Update
+        </Button>
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+        >
+         Close
+        </Button>
+      </Box></CardContent>
+              </Card> */}
+  </Modal></>
 )
 }

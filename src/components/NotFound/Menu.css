@@ -1,17 +1,15 @@
 .wrapper {
-    position: relative;
-    width: 200px;
-    height: 250px;
-    border: 2px solid #dc042c;
-    /* border-radius: 10px; */
-    margin: 50px auto;
-    margin-top: 200px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    /* box-shadow: 0 0 10px #abbfc0; */
-  }
-  
+  position: relative;
+  width: 200px;
+  height: 250px;
+  border: 2px solid #dc042c;
+  margin: 50px auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow: hidden; /* Prevent overflow */
+}
+
   .start {
     margin: 100px;
     border-radius: 7px;

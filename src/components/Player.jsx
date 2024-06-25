@@ -59,7 +59,7 @@ export class Player{
 
         ctx.font = '16px Arial';
         ctx.fillStyle = "lightgreen";
-        ctx.fillText(`Score: ${this.score}`, 15, 25);
+        // ctx.fillText(`Score: ${this.score}`, 15, 25);
     }
     setScore=(score,ctx)=>
         {

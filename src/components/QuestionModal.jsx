@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import axios from "../Axios";
+import toast,{Toaster} from 'react-hot-toast'
 
 const QuestionModal = ({
   questionData,
@@ -66,9 +67,15 @@ const QuestionModal = ({
       })
       .then((res) => {
         if (res?.data?.isCorrect === true) {
-          onClose(1);
+          toast.success("Correct answer");
+          setTimeout(()=>{
+            onClose(1);
+          },2000)
         } else {
-          onClose(0);
+          toast.error("Wrong answer")
+          setTimeout(()=>{
+            onClose(0);
+          },2000)
         }
       })
       .catch((err) => {
@@ -81,7 +88,7 @@ const QuestionModal = ({
   };
 
   return (
-    <Dialog open={true} onClose={onClose} fullWidth>
+    <><Dialog open={true} onClose={onClose} fullWidth>
       <DialogTitle>{questionData.question}</DialogTitle>
       <DialogContent>
         <FormControl component="fieldset">
@@ -91,8 +98,7 @@ const QuestionModal = ({
                 key={index}
                 value={index}
                 control={<Radio />}
-                label={option}
-              />
+                label={option} />
             ))}
           </RadioGroup>
         </FormControl>
@@ -133,7 +139,7 @@ const QuestionModal = ({
           </Button>
         </div>
       </DialogActions>
-    </Dialog>
+    </Dialog><Toaster /></>
   );
 };
 

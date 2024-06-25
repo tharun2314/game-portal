@@ -16,12 +16,15 @@ export default function HomePage() {
 
   const clickPlay = (event) => {
     console.log("I am heree....", event.target);
+    event.preventDefault();
+    event.stopPropagation();
     setPath(event.target.id);
     setOpen(true);
   };
 
   const handleCloseModal = () => {
     setOpen(false);
+    setPath("")
   };
 
   return (

@@ -73,7 +73,7 @@ function Shootergame() {
     
 
       let prevScore=player.score
-      if(player.score%20==0 && player.score!=0 && player.score==prevScore)
+      if(player.score%50==0 && player.score!=0 && player.score==prevScore)
         {
             let score=localStorage.getItem("score") || 0
             localStorage.setItem("score",score+70)
@@ -101,9 +101,7 @@ function Shootergame() {
     display:'flex',justifyContent:'center',alignItems:'center',height:'100%',flexDirection:'row'
     }}>
         <canvas id="myCanvas" width="950" height="550" style={{backgroundImage: `url(${bg})`,backgroundSize:"cover" ,border:'2px solid #000000',marginTop:'48px'}}/>
-        <div id="score">
-            score:{score}
-        </div>
+
         {showQuiz && <QuestionModal onClose={close} questionData={items?.questions[i]}/>}
     </div>
   );

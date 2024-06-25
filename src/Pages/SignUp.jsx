@@ -66,7 +66,7 @@ export default function SignUp() {
       password: password,
       firstName: firstName,
       lastName: lastName,
-      dob: data.get('dob')
+      classId: data.get('classId')
     };
 
     axios.post(process.env.REACT_APP_BASE_URL + 'api/auth/register', data).then((data) => {
@@ -138,9 +138,14 @@ export default function SignUp() {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker label="Date of Birth " name="dob" />
-                  </LocalizationProvider>
+                <TextField
+                    required
+                    fullWidth
+                    id="classID"
+                    label="Class ID"
+                    name="classId"
+                    autoComplete="family-name"
+                  />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField

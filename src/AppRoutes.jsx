@@ -6,9 +6,9 @@ import SignUp from "./Pages/SignUp";
 import Login from "./Pages/Login";
 import QuestionModal from "./components/QuestionModal";
 import Shootergame from "./components/Shootergame";
-import Snakegame from "./components/NotFound/Snakegame";
 import ShooterGameWrapper from "./components/NotFound/ShooterGameWrapper";
 import { isAuthenticated } from "./services/authservice";
+import SnakeGamePage from "./Pages/SnakeGamePage";
 
 const AppRoutes = () => {
   return (
@@ -20,7 +20,7 @@ const AppRoutes = () => {
       {/* Protected routes */}
       <Route
         path="/home"
-        element={isAuthenticated() ? <HomePage /> : <Navigate to="/login" replace />}
+        element={ <HomePage/>}
       />
       <Route
         path="/custom-modal"
@@ -32,7 +32,7 @@ const AppRoutes = () => {
       />
       <Route
         path="/snake-game"
-        element={isAuthenticated() ? <Snakegame /> : <Navigate to="/login" replace />}
+        element={isAuthenticated() ? <SnakeGamePage /> : <Navigate to="/login" replace />}
       />
 
       {/* Example of a public route */}

@@ -1,13 +1,16 @@
 import React, { Component } from "react";
 import Snake from "./Snake";
 import Food from "./Food";
-import Button from "./Button";
 import Menu from "./Menu";
 import "./snakegame.css";
 import QuestionModal from "../QuestionModal";
-import { useSelector, useDispatch } from 'react-redux';
-import { connect } from 'react-redux'
-import { addItem, removeItem, updateItem } from '../actions/itemActions';
+import { connect } from 'react-redux';
+import { addItem } from '../actions/itemActions';
+import { Button } from "@mui/material";
+import { Navigate } from "react-router-dom";
+
+
+
 const getRandomFood = () => {
   let min = 1;
   let max = 98;
@@ -19,15 +22,16 @@ const getRandomFood = () => {
 const initialState = {
   food: getRandomFood(),
   direction: "RIGHT",
-  speed: 100,
+  speed: 120,
   route: "menu",
   snakeDots: [[0, 0], [0, 2]],
-  score:0,
-  showQuiz:false,
-  i:0
+  score: 0,
+  showQuiz: false,
+  i: 0,
+  close:false
 };
+
 let startGame;
-let stopGame;
 
 class Snakegame extends Component {
   constructor(props) {
@@ -38,6 +42,12 @@ class Snakegame extends Component {
   componentDidMount() {
     startGame = setInterval(this.moveSnake, this.state.speed);
     document.onkeydown = this.onKeyDown;
+    document.body.style.backgroundColor = '#000000';
+    document.body.style.color = '#f0f0f0';
+    document.body.style.fontSynthesis = 'none';
+    document.body.style.textRendering = 'optimizeLegibility';
+    document.body.style.webkitFontSmoothing = 'antialiased';
+    document.body.style.mozOsxFontSmoothing = 'grayscale';
   }
 
   componentDidUpdate() {
@@ -47,6 +57,16 @@ class Snakegame extends Component {
     if (this.state.showQuiz) {
       clearInterval(startGame);
     }
+  }
+
+  componentWillUnmount() {
+    // Clean up styles when component unmounts
+    document.body.style.backgroundColor = '';
+    document.body.style.color = '';
+    document.body.style.fontSynthesis = '';
+    document.body.style.textRendering = '';
+    document.body.style.webkitFontSmoothing = '';
+    document.body.style.mozOsxFontSmoothing = '';
   }
 
   onKeyDown = (e) => {
@@ -107,7 +127,7 @@ class Snakegame extends Component {
     let head = snake[snake.length - 1];
     snake.pop();
     snake.forEach((dot) => {
-      if (head[0] == dot[0] && head[1] == dot[1]) {
+      if (head[0] === dot[0] && head[1] === dot[1]) {
         this.gameOver();
       }
     });
@@ -116,7 +136,7 @@ class Snakegame extends Component {
   onSnakeEats() {
     let head = this.state.snakeDots[this.state.snakeDots.length - 1];
     let food = this.state.food;
-    if (head[0] == food[0] && head[1] == food[1]) {
+    if (head[0] === food[0] && head[1] === food[1]) {
       console.log("I am heree");
       this.setState(
         (prevState) => ({
@@ -124,7 +144,7 @@ class Snakegame extends Component {
           score: prevState.score + 1,
         }),
         () => {
-          if (this.state.score % 2 == 0) {
+          if (this.state.score % 6 === 0) {
             this.setState({
               showQuiz: true,
             });
@@ -148,7 +168,7 @@ class Snakegame extends Component {
   increaseSpeed() {
     if (this.state.speed > 10) {
       this.setState({
-        speed: this.state.speed - 20,
+        speed: this.state.speed - 10,
       });
     }
   }
@@ -157,7 +177,7 @@ class Snakegame extends Component {
     this.setState({
       route: "game",
     });
-    console.log(this.props.items,"data")
+    console.log(this.props.items, "data");
   };
 
   gameOver() {
@@ -216,37 +236,48 @@ class Snakegame extends Component {
       snakeDots: dots,
     });
   };
-  closeModal=(data)=>{
-    let updatedScore=this.state.score;
-    console.log("I am hereee in closeModal")
-    console.log("state speed",this.state.speed)
-    startGame=setInterval(this.moveSnake,this.state.speed)
-    if(data=1)
-      {
-            updatedScore=this.state.score +10
-      }    
-       this.setState(prevState=>({showQuiz:false,score:updatedScore,i:prevState?.i+1}))
+
+  closeModal = (data) => {
+    let updatedScore = this.state.score;
+    console.log("I am hereee in closeModal");
+    console.log("state speed", this.state.speed);
+    startGame = setInterval(this.moveSnake, this.state.speed);
+    if (data === 1) {
+      updatedScore = this.state.score + 10;
+    }
+    this.setState((prevState) => ({
+      showQuiz: false,
+      score: updatedScore,
+      i: prevState?.i + 1,
+    }));
   };
+
+  closeGame = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+this.props.handleNavigate();
+  };
+
   render() {
-    
-    const { route, snakeDots, food,score } = this.state;
+    const { route, snakeDots, food, score } = this.state;
     return (
-      <div>
-        {route === "menu" ? (
-          <div>
-            <Menu onRouteChange={this.onRouteChange} />
-          </div>
-        ) : (
-          <div>
-            <div className="game-area">
-              <Snake snakeDots={snakeDots} />
-              <Food dot={food} />
-              <div style={{position:"relative",top:'-32px'}}>Score:{score}</div>
-            </div>
-         
-          </div>
-        )}
- {this.state.showQuiz && <QuestionModal onClose={this.closeModal} questionData={this.props.items?.questions[this.state.i]}/>}
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: "center" }}>
+        <div style={{ display: 'flex', flexDirection: 'row', alignItems: "center" }}>
+          <Menu onRouteChange={this.onRouteChange} />
+          <Button onClick={this.closeGame}>Close Game</Button>
+        </div>
+
+        <div className="game-area">
+          {route !== "menu" && <><Snake snakeDots={snakeDots} /><Food dot={food} /></>}
+          {/* <div style={{ position: "relative", top: '-32px' }}>Score:{score}</div> */}
+        </div>
+
+
+        {this.state.showQuiz && <QuestionModal onClose={this.closeModal} questionData={this.props.items?.questions[this.state.i]} />}
+        {/* {this.state.close && (
+          <Navigate to="/home" replace={true} />
+        )} */}
       </div>
     );
   }

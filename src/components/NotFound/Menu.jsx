@@ -4,16 +4,12 @@ import Button from '@mui/material/Button';
 
 const Menu = ({ onRouteChange }) => {
   return (
-    <div className="wrapper">
-      <div>
         <Button
         variant="contained"
-        style={{margin:100}}
+        style={{marginTop:100,width:80}}
           onClick={onRouteChange}
           type="button"
           value="start game">Start Game</Button>
-      </div>
-    </div>
   );
 };
 
