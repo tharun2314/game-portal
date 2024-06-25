@@ -84,7 +84,7 @@ function Shootergame() {
       if(player.score%50==0 && player.score!=0 && player.score==prevScore)
         {
             // let score=localStorage.getItem("score") || 0
-            score.current=parseInt(score.current)+1
+            // score.current=parseInt(score.current)+1
             clearInterval(myInterval)
           setShowQuiz(true)
         
@@ -95,7 +95,14 @@ function Shootergame() {
    
 }
   })
-  const close=()=>{
+  const close=(data)=>{
+    if(data==0)
+      {
+        score.current=parseInt(score.current)-2;
+      }
+      else{
+        score.current=parseInt(score.current)+1;
+      }
     setShowQuiz(false)
     setI((prev)=>prev+1)
 
