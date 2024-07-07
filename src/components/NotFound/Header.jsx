@@ -31,9 +31,9 @@ const navigate=useNavigate();
 const [anchorEl, setAnchorEl] = React.useState(null);
 const open = Boolean(anchorEl);
 const [openModal,setOpenModal]=React.useState(false);
-const handleClick = (event) => {
-  setAnchorEl(event.currentTarget);
-};
+// const handleClick = (event) => {
+//   setAnchorEl(event.currentTarget);
+// };
 const handleClose = () => {
 setOpenModal(true);
   setAnchorEl(null);
@@ -44,6 +44,9 @@ const handleLogout=()=>
  toast.success("you have been logged out")
  navigate('/login');
 }
+const handleClick=()=>{
+    navigate('/home')
+}
 
 const handleCloseModal=()=>{
     setOpenModal(false);
@@ -53,22 +56,12 @@ const handleCloseModal=()=>{
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        sx={{ mr: 2 }}
-                        // onClick={openNav}
-                    >
-                        <MenuIcon />
-                    </IconButton>
 
                     <Typography component="div" sx={{ flexGrow: 1 }} style={{ position: "relative",
     top: 12,
     right: 30
 }}>
-                    <img style={{width:70,marginTop:5}}src={Logo}></img>
+                    <img style={{width:70,marginTop:5,cursor:'pointer'}}src={Logo} onClick={handleClick}></img>
                     </Typography>
                    
                     <div>
