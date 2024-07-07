@@ -9,7 +9,8 @@ import CardMedia from '@mui/material/CardMedia';
 
 export default function BasicCard(props) {
   return (
-    <Card sx={{ minWidth: 275 }} id={props.id}>
+  
+       <Card sx={{ minWidth: 275 }} id={props.id}>
       <CardContent>
         <Typography variant="h5" sx={{ fontSize: 18 }} color="text.primary" gutterBottom>
           {props.name}
@@ -28,5 +29,6 @@ export default function BasicCard(props) {
         <Button variant="contained" onClick={props.onClick} id={props.id}>Play</Button>
       </CardActions>
     </Card>
+   
   );
 }

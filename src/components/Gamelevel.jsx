@@ -26,18 +26,32 @@ import {Modal,ModalDialog} from '@mui/joy';
 import {ModalClose} from '@mui/joy';
 import Axios from '../Axios';
 import { connect } from 'react-redux';
-import { addItem} from "./actions/itemActions"
+import { addItem,addLevel} from "./actions/itemActions"
 import { useSelector, useDispatch } from 'react-redux';
 
  export default function Gamelevel({open,handleCloseModal,path,...props})
 {
     const dispatch = useDispatch();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    let level;
       const handleLevel=(event)=>{
         Axios.get('/api/get-questions?difficulty='+event.target.id).then(({ data }) => {
             console.log(data)
             console.log(path,"heree")
             dispatch(addItem(data));
+            if(event.target?.id=='easy')
+              {
+               level=1;
+              }
+              else if(event.target?.id=='medium')
+                {
+                  level=2
+                }
+                else
+                {
+                  level=3
+                }
+            dispatch(addLevel(level))
           
             setTimeout(()=>{navigate(path)},2000)
      

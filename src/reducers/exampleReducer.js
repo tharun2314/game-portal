@@ -12,6 +12,10 @@ const initialState = {
         return {
           items: action.payload
         };
+        case 'LEVEL':
+          return{
+            level:action.payload
+          }
       default:
         return state;
     }

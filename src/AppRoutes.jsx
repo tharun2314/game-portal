@@ -9,6 +9,7 @@ import Shootergame from "./components/Shootergame";
 import ShooterGameWrapper from "./components/NotFound/ShooterGameWrapper";
 import { isAuthenticated } from "./services/authservice";
 import SnakeGamePage from "./Pages/SnakeGamePage";
+import UserScoreDetails from "./Pages/ScoreDetails";
 
 const AppRoutes = () => {
   return (
@@ -34,6 +35,10 @@ const AppRoutes = () => {
         path="/snake-game"
         element={isAuthenticated() ? <SnakeGamePage /> : <Navigate to="/login" replace />}
       />
+      <Route
+      path="/score-details"
+      element={<UserScoreDetails/>}/>
+
 
       {/* Example of a public route */}
       {/* <Route path="/public-route" element={<PublicComponent />} /> */}

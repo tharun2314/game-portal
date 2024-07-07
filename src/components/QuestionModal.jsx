@@ -15,9 +15,21 @@ import {
 import CircularProgress from "@mui/material/CircularProgress";
 import axios from "../Axios";
 import toast,{Toaster} from 'react-hot-toast'
+import LinearProgress from '@mui/material/LinearProgress';
 
 const QuestionModal = ({
-  questionData,
+  questionData={
+    id: 29,
+    difficulty: "easy",
+    question: "What is the primary goal of the Requirement Analysis phase in SDLC?",
+    options: [
+      "To write code",
+      "To gather user feedback",
+      "To develop initial prototypes",
+      "To gather and analyze requirements"
+    ],
+    answer: 3
+  },
   onClose,
   maxSecs = 30,
 }) => {
@@ -89,8 +101,14 @@ const QuestionModal = ({
 
   return (
     <><Dialog open={true} onClose={onClose} fullWidth>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Box sx={{ width: '100%', mr: 1,margin:0 }}>
+        <LinearProgress style={{margin:0,height:7}}variant="determinate" value={progress} />
+      </Box>
+    </Box>
       <DialogTitle>{questionData.question}</DialogTitle>
       <DialogContent>
+  
         <FormControl component="fieldset">
           <RadioGroup value={selectedOption} onChange={handleOptionChange}>
             {questionData.options.map((option, index) => (
@@ -106,19 +124,7 @@ const QuestionModal = ({
       <DialogActions
         style={{ display: "flex", justifyContent: "space-between" }}
       >
-        <Box
-          sx={{ position: "relative", display: "flex", alignItems: "center" }}
-        >
-          <CircularProgress variant="determinate" value={progress} />
-          <Typography
-            variant="caption"
-            component="div"
-            color="text.secondary"
-            sx={{ marginLeft: "5px" }}
-          >
-            {`${Math.round(remainingSecs)} secs`}
-          </Typography>
-        </Box>
+          
         <div style={{ display: "flex" }}>
           <Button
             variant="outlined"

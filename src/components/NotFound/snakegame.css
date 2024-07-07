@@ -45,6 +45,7 @@ body {
     height: 2%;
     background-color: #0074d1;
     z-index: 2;
+    border: solid 1px black;
   }
   
   .food {

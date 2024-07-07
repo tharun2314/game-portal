@@ -5,9 +5,10 @@ import Menu from "./Menu";
 import "./snakegame.css";
 import QuestionModal from "../QuestionModal";
 import { connect } from 'react-redux';
-import { addItem } from '../actions/itemActions';
+import { addItem,addLevel } from '../actions/itemActions';
 import { Button } from "@mui/material";
 import { Navigate } from "react-router-dom";
+import Axios from "../../Axios";
 
 
 
@@ -144,7 +145,7 @@ class Snakegame extends Component {
           score: prevState.score + 1,
         }),
         () => {
-          if (this.state.score % 6 === 0) {
+          if (this.state.score % 2 === 0) {
             this.setState({
               showQuiz: true,
             });
@@ -159,7 +160,7 @@ class Snakegame extends Component {
 
   increaseSnake() {
     let newSnake = [...this.state.snakeDots];
-    newSnake.unshift([]);
+    newSnake.unshift([],[]);
     this.setState({
       snakeDots: newSnake,
     });
@@ -181,7 +182,15 @@ class Snakegame extends Component {
   };
 
   gameOver() {
+    console.log(this.props.level)
+    Axios.post('/api/update-score',{score:this.state.snakeDots.length - 2,game_id:1,level:this.props?.level}).then(({ data }) => {
+      console.log(data)
+   }).catch(({ response }) => {
+   })
     alert(`GAME OVER, your score is ${this.state.snakeDots.length - 2}`);
+    
+  
+
     this.setState(initialState);
   }
 
@@ -284,7 +293,8 @@ this.props.handleNavigate();
 }
 
 const mapStateToProps = state => ({
-  items: state.example.items
+  items: state.example.items,
+  level:state.example.level
 });
 
 const mapDispatchToProps = {
