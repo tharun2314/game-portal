@@ -6,10 +6,7 @@ import Snakegame from "./components/NotFound/Snakegame";
 function App() {
   return (
     <div>
-      <Layout>
-        <AppRoutes/>
-        {/* <Snakegame/> */}
-      </Layout>
+      <AppRoutes />
     </div>
   );
 }

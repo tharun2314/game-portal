@@ -11,6 +11,7 @@ import { isAuthenticated } from "./services/authservice";
 import SnakeGamePage from "./Pages/SnakeGamePage";
 import UserScoreDetails from "./Pages/ScoreDetails";
 import ScoreBoard from "./Pages/ScoreBoard";
+import GameResultChart from "./components/GameResultChart";
 
 const AppRoutes = () => {
   return (
@@ -20,32 +21,54 @@ const AppRoutes = () => {
       <Route path="/signup" element={<SignUp />} />
 
       {/* Protected routes */}
-      <Route
-        path="/home"
-        element={ <HomePage/>}
-      />
+      <Route path="/home" element={<HomePage />} />
       <Route
         path="/custom-modal"
-        element={isAuthenticated() ? <QuestionModal /> : <Navigate to="/login" replace />}
+        element={
+          isAuthenticated() ? (
+            <QuestionModal />
+          ) : (
+            <Navigate to="/login" replace />
+          )
+        }
       />
       <Route
         path="/shooter-game"
-        element={isAuthenticated() ? <ShooterGameWrapper /> : <Navigate to="/login" replace />}
+        element={
+          isAuthenticated() ? (
+            <ShooterGameWrapper />
+          ) : (
+            <Navigate to="/login" replace />
+          )
+        }
       />
       <Route
         path="/snake-game"
-        element={isAuthenticated() ? <SnakeGamePage /> : <Navigate to="/login" replace />}
+        element={
+          isAuthenticated() ? (
+            <SnakeGamePage />
+          ) : (
+            <Navigate to="/login" replace />
+          )
+        }
+      />
+      <Route path="/score-details" element={<UserScoreDetails />} />
+      <Route
+        path="/scoreboard"
+        element={
+          isAuthenticated() ? <ScoreBoard /> : <Navigate to="/login" replace />
+        }
       />
       <Route
-      path="/score-details"
-      element={<UserScoreDetails/>}/>
-         <Route
-        path="/scoreboard"
-        element={isAuthenticated() ? <ScoreBoard/> : <Navigate to="/login" replace />}
+        path="/game-results"
+        element={
+          isAuthenticated() ? (
+            <GameResultChart />
+          ) : (
+            <Navigate to="/login" replace />
+          )
+        }
       />
-      
-
-
       {/* Example of a public route */}
       {/* <Route path="/public-route" element={<PublicComponent />} /> */}
     </Routes>
