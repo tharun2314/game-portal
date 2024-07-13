@@ -31,9 +31,9 @@ const navigate=useNavigate();
 const [anchorEl, setAnchorEl] = React.useState(null);
 const open = Boolean(anchorEl);
 const [openModal,setOpenModal]=React.useState(false);
-// const handleClick = (event) => {
-//   setAnchorEl(event.currentTarget);
-// };
+const handleClick = (event) => {
+  setAnchorEl(event.currentTarget);
+};
 const handleClose = () => {
 setOpenModal(true);
   setAnchorEl(null);
@@ -44,7 +44,7 @@ const handleLogout=()=>
  toast.success("you have been logged out")
  navigate('/login');
 }
-const handleClick=()=>{
+const handleLogoClick=()=>{
     navigate('/home')
 }
 
@@ -61,7 +61,7 @@ const handleCloseModal=()=>{
     top: 12,
     right: 30
 }}>
-                    <img style={{width:70,marginTop:5,cursor:'pointer'}}src={Logo} onClick={handleClick}></img>
+                    <img style={{width:70,marginTop:5,cursor:'pointer'}}src={Logo} onClick={handleLogoClick}></img>
                     </Typography>
                    
                     <div>

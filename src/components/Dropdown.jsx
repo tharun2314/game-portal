@@ -38,7 +38,6 @@ export default function MultipleSelect({items,handleDropdownChange,DropdownValue
         <Select
           labelId="demo-multiple-name-label"
           id="demo-multiple-name"
-          multiple
           value={DropdownValue}
           onChange={handleDropdownChange}
           input={<OutlinedInput label="Name" />}

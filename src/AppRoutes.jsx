@@ -11,8 +11,13 @@ import { isAuthenticated } from "./services/authservice";
 import SnakeGamePage from "./Pages/SnakeGamePage";
 import UserScoreDetails from "./Pages/ScoreDetails";
 import ScoreBoard from "./Pages/ScoreBoard";
+import MarioJump from "./Pages/MarioJump";
+import { useSelector } from "react-redux";
+import { LoadingScreen } from "./Pages/components";
 
 const AppRoutes = () => {
+  const isLoading = useSelector((state) => state?.engine?.loadingScreen==undefined? true:state?.engine?.loadingScreen);
+  console.log(isLoading)
   return (
     <Routes>
       <Route path="/" element={<Login />} />
@@ -43,11 +48,9 @@ const AppRoutes = () => {
         path="/scoreboard"
         element={isAuthenticated() ? <ScoreBoard/> : <Navigate to="/login" replace />}
       />
-      
-
-
-      {/* Example of a public route */}
-      {/* <Route path="/public-route" element={<PublicComponent />} /> */}
+       <Route
+      path="/mario-jump"
+      element={ isLoading?<LoadingScreen />:<MarioJump/>}/>
     </Routes>
   );
 };

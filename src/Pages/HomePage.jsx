@@ -7,6 +7,7 @@ import snake from "../components/images/snake-image.png";
 import shooter from "../components/images/shooter.png";
 import { useNavigate } from "react-router-dom";
 import Gamelevel from '../components/Gamelevel';
+import mario from "../components/images/mario.png";
 import { Box } from '@mui/material';
 
 export default function HomePage() {
@@ -32,11 +33,14 @@ export default function HomePage() {
       <Header />
       <Sidebar />
       <Grid container spacing={2} sx={{ marginLeft:30, padding: 2 }}>
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid item xs={12} sm={6} md={3}>
           <BasicCard name="Snake game" id="/snake-game" onClick={clickPlay} component={snake} />
         </Grid>
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid item xs={12} sm={6} md={3}>
           <BasicCard name="Shooter Game" id="/shooter-game" onClick={clickPlay} component={shooter} />
+        </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+          <BasicCard name="Mario Jump" id="/mario-jump" onClick={clickPlay} component={mario} />
         </Grid>
         {open && <Gamelevel open={open} path={path} handleCloseModal={handleCloseModal} />}
       </Grid>

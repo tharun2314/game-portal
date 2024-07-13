@@ -9,7 +9,17 @@ import MultipleSelect from '../components/Dropdown.jsx';
 import { Toast,ToastContainer } from 'react-toastify';
 import { Dropdown } from '@mui/joy';
 
-
+const Games={
+    'Snake':1,
+    'Shooter':2,
+    'Mario-Jump':3,
+    'Car-Game':4
+}
+const Level={
+    'Easy':1,
+    'Medium':2,
+    'Hard':3,
+}
 
 export default function ScoreBoard() {
     const [state, setState] = useState('quiz');
@@ -17,7 +27,8 @@ export default function ScoreBoard() {
         email:"Tharun",
         score:0
     }])
-    const [game,setGames]=useState([])
+    const [game,setGames]=useState('Snake')
+    const [level,setLevel]=useState('Easy')
 
     const handleChange = () => {
         if (state == 'quiz')
@@ -26,10 +37,14 @@ export default function ScoreBoard() {
             setState('Individual')
     }
 
+    useEffect(()=>{
+        getData();
+
+    },[game,level])
     const getData = () => {
-        Axios.get('/api/leaderboard?type=' + state).then(({ data }) => {
-            console.log("data", data.results)
-            setData(data?.results)
+        Axios.get(`/api/get-scores?top=10&game_id=${Games[game]}&level=${Level[level]}`).then(({ data }) => {
+            console.log("data", data.scores)
+            setData(data?.scores)
         }).catch(({ response }) => {
             console.log(response.data.message)
         })
@@ -45,6 +60,17 @@ export default function ScoreBoard() {
           typeof value === 'string' ? value.split(',') : value,
         );
       };
+
+      const handleDropdownLevelChange = (event) => {
+        const {
+          target: { value },
+        } = event;
+        console.log(value)
+        setLevel(
+          // On autofill we get a stringified value.
+          typeof value === 'string' ? value.split(',') : value,
+        );
+      };
     
 
     useEffect(() => {
@@ -53,7 +79,7 @@ export default function ScoreBoard() {
     return (
         <><Header />
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center',flexDirection:'column' }}>
-                <h3>ScoreBoard</h3><br></br>
+                <h2>Score Board</h2><br></br>
                 <div style={{display:'flex',alignItems:'center',gap:2,width:'100%',justifyContent:'space-around'}}>
                 <div style={{display:'flex',alignItems:'center',gap:2}}>
                     <h4> All</h4>
@@ -68,13 +94,18 @@ export default function ScoreBoard() {
                        <h4> Individual</h4>
                     </div>
           
-                <MultipleSelect items={['Snake','Space Shooter','Mario Jump','Car Game']} DropdownValue={game} DropdownName={`Game`} handleDropdownChange={handleDropdownChange}/></div>
+                <MultipleSelect items={['Snake','Shooter','Mario-Jump','Car-Game']} DropdownValue={game} DropdownName={`Game`} handleDropdownChange={handleDropdownChange}/>
+                <MultipleSelect items={['Easy','Medium','Hard']} DropdownValue={level} DropdownName={`Level`} handleDropdownChange={handleDropdownLevelChange}/>
+                </div>
             </div><div id="container">
-                {data.length > 0 ? data.map((el, index) => {
+                {data?.length > 0 ? data.map((el, index) => {
                     return (
                         <div key={index} className="row">
-                            <div className="name">{el?.email}</div>
-                            <div className="score">{el?.score}</div>
+                            <div className="name">{el?.fullName}</div>
+                            <div className="email" style={{color:'black'}}>{el?.played_by}</div>
+                            <div className="score" style={{color:'black'}}>{el?.score}</div>
+                       
+                            {/* <div className="email" style={{color:'black'}}>{el?.created_on}</div> */}
                         </div>
                     );
                 }) : <h2>No Results Found</h2>}
