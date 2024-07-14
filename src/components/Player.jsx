@@ -1,4 +1,5 @@
 import img from "./images/player.png"
+import Axios from "../Axios";
 export class Player{
     dead = false;
     health = 100;
@@ -7,6 +8,7 @@ export class Player{
     speed = 25;
     firebullets = [];
     lastFireAt = Date.now();
+    flag=true;
 
     constructor(posX,posY){
         this.posX = posX;
@@ -80,6 +82,14 @@ function gameOver(score) {
     <button class="btn btn-danger mt-2" onClick="location.reload()">Again</button>
     </center>
     `
+    // if(this.flag)
+    // {
+    // Axios.post('/api/update-score',{score,game_id:2,level:1}).then(({ data }) => {
+    //     console.log(data)
+    //  }).catch(({ response }) => {
+    //  })
+    //  this.flag=false
+    // }
 }
 
 export default Player;

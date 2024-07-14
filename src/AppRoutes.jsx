@@ -14,6 +14,7 @@ import ScoreBoard from "./Pages/ScoreBoard";
 import MarioJump from "./Pages/MarioJump";
 import { useSelector } from "react-redux";
 import { LoadingScreen } from "./Pages/components";
+import CarGame from "./Pages/CarGame";
 
 const AppRoutes = () => {
   const isLoading = useSelector((state) => state?.engine?.loadingScreen==undefined? true:state?.engine?.loadingScreen);
@@ -51,6 +52,9 @@ const AppRoutes = () => {
        <Route
       path="/mario-jump"
       element={ isLoading?<LoadingScreen />:<MarioJump/>}/>
+         <Route
+      path="/car-game"
+      element={<CarGame/>}/>
     </Routes>
   );
 };
