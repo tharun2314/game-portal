@@ -1,5 +1,5 @@
-import React from "react";
-import { Bar, Line, Pie } from "react-chartjs-2";
+import React, { useEffect, useState } from "react";
+import { Line, Pie } from "react-chartjs-2";
 
 import {
   Chart as ChartJS,
@@ -13,6 +13,7 @@ import {
   ArcElement,
 } from "chart.js";
 import { Box, Typography } from "@mui/material";
+import Axios from "../Axios";
 
 ChartJS.register(
   CategoryScale,
@@ -25,62 +26,78 @@ ChartJS.register(
   Legend
 );
 
-const options = {
-  index: "y", // Swap axes for horizontal bar chart
-  scales: {
-    x: {
-      ticks: {
-        display: true,
-      },
-    },
-    y: {
-      beginAtZero: true,
-      // reverse: true,
-    },
-  },
-};
-
-const chartData = {
-  labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-  datasets: [
-    {
-      label: "Scores",
-      data: [1, 2, 30],
-      borderColor: "#36a2eb",
-      backgroundColor: "#36a2eb",
-    },
-  ],
-};
-
-const pieData = {
-  labels: ["snake", "space-shooter", "car", "mario"],
-  datasets: [
-    {
-      label: "Pie chart",
-      data: [1, 2, 4, 10],
-      backgroundColor: ["#ff9f3f", "#ffcd57", "#4bc0c0", "#36a2eb"],
-    },
-  ],
-};
-
-const pieOptions = {
-  type: "pie",
-  data: pieData,
-  options: {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top",
-      },
-      title: {
-        display: true,
-        text: "Chart.js Pie Chart",
-      },
-    },
-  },
-};
-
 const GameResultChart = () => {
+  const [pieChartData, setPieChartData] = useState([]);
+  const [lineChartData, setLineChartData] = useState([]);
+
+  useEffect(() => {
+    Axios.get("/api/get-graph-data")
+      .then((res) => {
+        const { pieChartScores, lineChartScores } = res.data;
+
+        setPieChartData(pieChartScores);
+        setLineChartData(lineChartScores);
+      })
+      .catch(() => {
+        console.error("Failed to load graph results");
+      });
+  });
+
+  const options = {
+    index: "y", // Swap axes for horizontal bar chart
+    scales: {
+      x: {
+        ticks: {
+          display: true,
+        },
+      },
+      y: {
+        beginAtZero: true,
+        // reverse: true,
+      },
+    },
+  };
+
+  const chartData = {
+    labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    datasets: [
+      {
+        label: "Scores",
+        data: lineChartData,
+        borderColor: "#36a2eb",
+        backgroundColor: "#36a2eb",
+      },
+    ],
+  };
+
+  const pieData = {
+    labels: ["snake", "space-shooter", "car", "mario"],
+    datasets: [
+      {
+        label: "Pie chart",
+        data: pieChartData,
+        backgroundColor: ["#ff9f3f", "#ffcd57", "#4bc0c0", "#36a2eb"],
+      },
+    ],
+  };
+
+  const pieOptions = {
+    type: "pie",
+    data: pieData,
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "top",
+        },
+        title: {
+          display: true,
+          text: "Chart.js Pie Chart",
+        },
+      },
+    },
+  };
+
   return (
     <div>
       <Box
