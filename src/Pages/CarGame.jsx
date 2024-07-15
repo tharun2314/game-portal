@@ -2,16 +2,16 @@ import React, { useState, useEffect, useCallback } from 'react';
 import './CarGame.css';
 import $ from 'jquery';
 
-const getRandomLeftPosition = (enemyCars) => {
+const getRandomLeftPosition = (existingPositions) => {
   const container = $('#container');
   const containerWidth = parseInt(container.css('width'));
   const carWidth = 50; // Assuming each car is 50px wide
   let position;
 
-  // Generate a random position that doesn't overlap with existing cars
+  // Generate a random position that doesn't overlap with existing cars or coins
   do {
     position = Math.floor(Math.random() * (containerWidth - carWidth)) + 'px';
-  } while (enemyCars.some(car => car.left === position));
+  } while (existingPositions.includes(position));
 
   return position;
 };
@@ -33,6 +33,10 @@ const Line = ({ id, top }) => (
   <div className="line" id={id} style={{ top }}></div>
 );
 
+const Coin = ({ id, top, left }) => (
+  <div className="coin" id={id} style={{ top, left }}></div>
+);
+
 const CarGame = () => {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
@@ -40,9 +44,13 @@ const CarGame = () => {
   const [lineSpeed, setLineSpeed] = useState(5);
   const [carPosition, setCarPosition] = useState({ bottom: 10, left: '60%' });
   const [enemyCars, setEnemyCars] = useState([
-    { id: 'car-1', color: 'green', top: -100, left: getRandomLeftPosition([]) },
-    { id: 'car-2', color: 'red', top: -200, left: getRandomLeftPosition([]) },
-    { id: 'car-3', color: '#26c5ff', top: -350, left: getRandomLeftPosition([]) },
+    { id: 'car-1', color: 'green', top: -100, left: '0px' },
+    { id: 'car-2', color: 'red', top: -200, left: '100px' },
+    { id: 'car-3', color: '#26c5ff', top: -350, left: '200px' },
+  ]);
+  const [coins, setCoins] = useState([
+    { id: 'coin-1', top: -150, left: '50px' },
+    { id: 'coin-2', top: -300, left: '150px' },
   ]);
   const [line1Top, setLine1Top] = useState(-150);
   const [line2Top, setLine2Top] = useState(150);
@@ -99,25 +107,25 @@ const CarGame = () => {
         setScore((prevScore) => prevScore + 1);
         if (score % 300 === 0) {
           setCarSpeed((speed) => speed + 1);
-          setEnemyCars((state) => [
-            ...state,
-            {
-              id: 'car-4',
-              color: '#26c5ff',
-              top: -350,
-              left: getRandomLeftPosition([])
-            }
-          ]);
-          
           setLineSpeed((speed) => speed + 1);
         }
 
-        setEnemyCars((prevCars) => 
+        setEnemyCars((prevCars) =>
           prevCars.map(car => {
             if (car.top > 700) {
-              return { ...car, top: -60, left: getRandomLeftPosition(prevCars) };
+              return { ...car, top: -60, left: getRandomLeftPosition(prevCars.map(c => c.left)) };
             } else {
               return { ...car, top: car.top + carSpeed };
+            }
+          })
+        );
+
+        setCoins((prevCoins) =>
+          prevCoins.map(coin => {
+            if (coin.top > 700) {
+              return { ...coin, top: -60, left: getRandomLeftPosition([...enemyCars.map(c => c.left), ...prevCoins.map(c => c.left)]) };
+            } else {
+              return { ...coin, top: coin.top + carSpeed };
             }
           })
         );
@@ -150,10 +158,18 @@ const CarGame = () => {
   useEffect(() => {
     const carElem = document.getElementById('car');
     const enemyCarElems = enemyCars.map(car => document.getElementById(car.id));
+    const coinElems = coins.map(coin => document.getElementById(coin.id));
 
     if (enemyCarElems.some(enemyCar => checkCollision(carElem, enemyCar))) {
       setGameOver(true);
     }
+
+    coinElems.forEach((coin, index) => {
+      if (checkCollision(carElem, coin)) {
+        setCoins((prevCoins) => prevCoins.filter((_, i) => i !== index));
+        setScore((prevScore) => prevScore + 50);
+      }
+    });
   });
 
   return (
@@ -169,6 +185,9 @@ const CarGame = () => {
         <Car id="car" color="blanchedalmond" top="auto" left={carPosition.left} />
         {enemyCars.map((car) => (
           <Car key={car.id} id={car.id} color={car.color} top={car.top} left={car.left} />
+        ))}
+        {coins.map((coin) => (
+          <Coin key={coin.id} id={coin.id} top={coin.top} left={coin.left} />
         ))}
         {gameOver && (
           <div id="restart-div">
