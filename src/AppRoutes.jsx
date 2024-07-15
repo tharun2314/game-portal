@@ -18,6 +18,7 @@ import CarGame from "./Pages/CarGame";
 import HelpModule from "./Pages/HelpModule";
 import GameResultChart from "./components/GameResultChart";
 import AchievementPage from "./Pages/AchievementsPage";
+import Feedback from "./Pages/Feedback";
 
 const AppRoutes = () => {
   const isLoading = useSelector((state) => state?.engine?.loadingScreen==undefined? true:state?.engine?.loadingScreen);
@@ -95,6 +96,11 @@ const AppRoutes = () => {
 <Route
       path="/achievements"
       element={<AchievementPage/>}/>
+
+      
+<Route
+      path="/feedback"
+      element={<Feedback/>}/>
     </Routes>
   );
 };
