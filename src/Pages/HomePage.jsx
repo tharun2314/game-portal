@@ -42,6 +42,9 @@ export default function HomePage() {
         <Grid item xs={12} sm={6} md={3}>
           <BasicCard name="Mario Jump" id="/mario-jump" onClick={clickPlay} component={mario} />
         </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+          <BasicCard name="Car Game" id="/car-game" onClick={clickPlay} component={mario} />
+        </Grid>
         {open && <Gamelevel open={open} path={path} handleCloseModal={handleCloseModal} />}
       </Grid>
     </Box>

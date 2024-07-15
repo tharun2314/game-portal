@@ -24,6 +24,7 @@ const Score = () => {
 
       if (score % 100 == 0 && score != 0) {
         setShowQuiz(true);
+        setI((prev)=>prev+1)
         dispatch(setReady(false));
       }
     }
