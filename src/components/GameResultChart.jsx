@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Line, Pie } from "react-chartjs-2";
+import Header from "./NotFound/Header";
 
 import {
   Chart as ChartJS,
@@ -41,7 +42,7 @@ const GameResultChart = () => {
       .catch(() => {
         console.error("Failed to load graph results");
       });
-  });
+  },[]);
 
   const options = {
     index: "y", // Swap axes for horizontal bar chart
@@ -99,7 +100,7 @@ const GameResultChart = () => {
   };
 
   return (
-    <div>
+    <><Header /><div>
       <Box
         sx={{
           display: "flex",
@@ -145,7 +146,7 @@ const GameResultChart = () => {
           </Box>
         </Box>
       </Box>
-    </div>
+    </div></>
   );
 };
 

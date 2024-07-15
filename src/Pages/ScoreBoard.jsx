@@ -8,6 +8,9 @@ import * as React from 'react';
 import MultipleSelect from '../components/Dropdown.jsx';
 import { Toast,ToastContainer } from 'react-toastify';
 import { Dropdown } from '@mui/joy';
+import ShareIcon from '@mui/icons-material/Share';
+import Share from '@mui/icons-material/Share';
+import { useLocation } from 'react-router-dom';
 
 const Games={
     'Snake':1,
@@ -22,6 +25,7 @@ const Level={
 }
 
 export default function ScoreBoard() {
+    const location=useLocation();
     const [state, setState] = useState('quiz');
     const [data, setData] = useState([{
         email:"Tharun",
@@ -76,6 +80,20 @@ export default function ScoreBoard() {
     useEffect(() => {
         getData()
     }, [state])
+
+    const copyToClipboard = (text) => {
+        console.log(window.location.host)
+        let url=window.location.host+`/score-details/${text}`
+        navigator.clipboard.writeText(url)
+          .then(() => {
+            console.log('Text copied to clipboard:', text);
+            // Optionally, you can show a success message or update state
+          })
+          .catch(err => {
+            console.error('Failed to copy text:', err);
+            // Handle error, show error message, etc.
+          });
+      };
     return (
         <><Header />
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center',flexDirection:'column' }}>
@@ -104,6 +122,7 @@ export default function ScoreBoard() {
                             <div className="name">{el?.fullName}</div>
                             <div className="email" style={{color:'black'}}>{el?.played_by}</div>
                             <div className="score" style={{color:'black'}}>{el?.score}</div>
+                            <Share onClick={()=>copyToClipboard(el?.scoreId)}/>
                        
                             {/* <div className="email" style={{color:'black'}}>{el?.created_on}</div> */}
                         </div>

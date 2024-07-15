@@ -16,12 +16,18 @@ import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import snake from "../components/images/snake-image.png";
+import {
+    useParams
+  } from "react-router-dom";
+  import Header from '../components/NotFound/Header';
 const UserScoreDetails = () => {
+    let { id } = useParams();
+
 
     const [scores,setScores]=useState([]);
 
     useEffect(()=>{
-        Axios.get('/api/get-score-details/70f8ac9b-a1a5-45c2-88f4-a2c0bd3bbf0b').then(({ data }) => {
+        Axios.get('/api/get-score-details/'+id).then(({ data }) => {
             console.log(data)
             setScores(data)
          }).catch(({ response }) => {
@@ -29,9 +35,9 @@ const UserScoreDetails = () => {
 
     },[])
   return (
-    <div style={{display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
-        <h2>Shared Score Results !!!!!!!!</h2>
-<Card sx={{ maxWidth: 345 }}>
+    <><Header /><div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+          <h2>Shared Score Results !!!!!!!!</h2>
+          <Card sx={{ maxWidth: 345 }}>
               <CardHeader
                   avatar={<Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
                       {scores?.fullName?.[0]}
@@ -45,11 +51,11 @@ const UserScoreDetails = () => {
                   alt="Paella dish" />
               <CardContent>
                   <Typography variant="body2" color="text.secondary">
-                    Score:{scores?.score}<br></br>
-                    Level:{scores?.level}
+                      Score:{scores?.score}<br></br>
+                      Level:{scores?.level}
                   </Typography>
               </CardContent>
-          </Card></div>
+          </Card></div></>
   );
 };
 

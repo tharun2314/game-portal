@@ -17,6 +17,7 @@ import { LoadingScreen } from "./Pages/components";
 import CarGame from "./Pages/CarGame";
 import HelpModule from "./Pages/HelpModule";
 import GameResultChart from "./components/GameResultChart";
+import AchievementPage from "./Pages/AchievementsPage";
 
 const AppRoutes = () => {
   const isLoading = useSelector((state) => state?.engine?.loadingScreen==undefined? true:state?.engine?.loadingScreen);
@@ -59,7 +60,7 @@ const AppRoutes = () => {
           )
         }
       />
-      <Route path="/score-details" element={<UserScoreDetails />} />
+      <Route path="/score-details/:id" element={<UserScoreDetails />} />
       <Route
         path="/scoreboard"
         element={
@@ -67,7 +68,7 @@ const AppRoutes = () => {
         }
       />
       <Route
-        path="/game-results"
+        path="/dashboard"
         element={
           isAuthenticated() ? (
             <GameResultChart />
@@ -87,6 +88,13 @@ const AppRoutes = () => {
           <Route
       path="/help-module"
       element={<HelpModule/>}/>
+            <Route
+      path="/help-module"
+      element={<HelpModule/>}/>
+
+<Route
+      path="/achievements"
+      element={<AchievementPage/>}/>
     </Routes>
   );
 };

@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 import Gamelevel from '../components/Gamelevel';
 import mario from "../components/images/mario.png";
 import { Box } from '@mui/material';
+import car from "../components/images/car-game.png"
+
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -32,21 +34,23 @@ export default function HomePage() {
     <Box sx={{ overflowX: 'hidden', padding: 0, margin: 0 }}>
       <Header />
       <Sidebar />
-      <Grid container spacing={2} sx={{ marginLeft:30, padding: 2 }}>
-        <Grid item xs={12} sm={6} md={3}>
-          <BasicCard name="Snake game" id="/snake-game" onClick={clickPlay} component={snake} />
+      <Box sx={{ padding: 2, marginLeft: 30 }}>
+        <Grid container spacing={2} sx={{ flexWrap: 'wrap' }}>
+          <Grid item xs={12} sm={6} md={3}>
+            <BasicCard name="Snake Game" id="/snake-game" onClick={clickPlay} component={snake} />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <BasicCard name="Shooter Game" id="/shooter-game" onClick={clickPlay} component={shooter} />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <BasicCard name="Mario Jump" id="/mario-jump" onClick={clickPlay} component={mario} />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <BasicCard name="Car Game" id="/car-game" onClick={clickPlay} component={car} />
+          </Grid>
+          {open && <Gamelevel open={open} path={path} handleCloseModal={handleCloseModal} />}
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <BasicCard name="Shooter Game" id="/shooter-game" onClick={clickPlay} component={shooter} />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <BasicCard name="Mario Jump" id="/mario-jump" onClick={clickPlay} component={mario} />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <BasicCard name="Car Game" id="/car-game" onClick={clickPlay} component={mario} />
-        </Grid>
-        {open && <Gamelevel open={open} path={path} handleCloseModal={handleCloseModal} />}
-      </Grid>
+      </Box>
     </Box>
   );
 }
