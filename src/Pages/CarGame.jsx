@@ -2,6 +2,20 @@ import React, { useState, useEffect, useCallback } from 'react';
 import './CarGame.css';
 import $ from 'jquery';
 
+const getRandomLeftPosition = (enemyCars) => {
+  const container = $('#container');
+  const containerWidth = parseInt(container.css('width'));
+  const carWidth = 50; // Assuming each car is 50px wide
+  let position;
+
+  // Generate a random position that doesn't overlap with existing cars
+  do {
+    position = Math.floor(Math.random() * (containerWidth - carWidth)) + 'px';
+  } while (enemyCars.some(car => car.left === position));
+
+  return position;
+};
+
 const Car = ({ id, color, top, left }) => (
   <div className="car" id={id} style={{ top, left, background: color }}>
     <div className="f-glass"></div>
@@ -25,9 +39,11 @@ const CarGame = () => {
   const [carSpeed, setCarSpeed] = useState(10);
   const [lineSpeed, setLineSpeed] = useState(5);
   const [carPosition, setCarPosition] = useState({ bottom: 10, left: '60%' });
-  const [car1Top, setCar1Top] = useState(-100);
-  const [car2Top, setCar2Top] = useState(-200);
-  const [car3Top, setCar3Top] = useState(-350);
+  const [enemyCars, setEnemyCars] = useState([
+    { id: 'car-1', color: 'green', top: -100, left: getRandomLeftPosition([]) },
+    { id: 'car-2', color: 'red', top: -200, left: getRandomLeftPosition([]) },
+    { id: 'car-3', color: '#26c5ff', top: -350, left: getRandomLeftPosition([]) },
+  ]);
   const [line1Top, setLine1Top] = useState(-150);
   const [line2Top, setLine2Top] = useState(150);
   const [line3Top, setLine3Top] = useState(450);
@@ -83,12 +99,29 @@ const CarGame = () => {
         setScore((prevScore) => prevScore + 1);
         if (score % 300 === 0) {
           setCarSpeed((speed) => speed + 1);
+          setEnemyCars((state) => [
+            ...state,
+            {
+              id: 'car-4',
+              color: '#26c5ff',
+              top: -350,
+              left: getRandomLeftPosition([])
+            }
+          ]);
+          
           setLineSpeed((speed) => speed + 1);
         }
 
-        setCar1Top((top) => (top > 700 ? -60 : top + carSpeed));
-        setCar2Top((top) => (top > 700 ? -60 : top + carSpeed));
-        setCar3Top((top) => (top > 700 ? -60 : top + carSpeed));
+        setEnemyCars((prevCars) => 
+          prevCars.map(car => {
+            if (car.top > 700) {
+              return { ...car, top: -60, left: getRandomLeftPosition(prevCars) };
+            } else {
+              return { ...car, top: car.top + carSpeed };
+            }
+          })
+        );
+
         setLine1Top((top) => (top > 850 ? -300 : top + lineSpeed));
         setLine2Top((top) => (top > 850 ? -300 : top + lineSpeed));
         setLine3Top((top) => (top > 850 ? -300 : top + lineSpeed));
@@ -116,11 +149,9 @@ const CarGame = () => {
 
   useEffect(() => {
     const carElem = document.getElementById('car');
-    const car1Elem = document.getElementById('car-1');
-    const car2Elem = document.getElementById('car-2');
-    const car3Elem = document.getElementById('car-3');
+    const enemyCarElems = enemyCars.map(car => document.getElementById(car.id));
 
-    if (checkCollision(carElem, car1Elem) || checkCollision(carElem, car2Elem) || checkCollision(carElem, car3Elem)) {
+    if (enemyCarElems.some(enemyCar => checkCollision(carElem, enemyCar))) {
       setGameOver(true);
     }
   });
@@ -136,9 +167,9 @@ const CarGame = () => {
         <Line id="line-2" top={line2Top} />
         <Line id="line-3" top={line3Top} />
         <Car id="car" color="blanchedalmond" top="auto" left={carPosition.left} />
-        <Car id="car-1" color="green" top={car1Top} left="60%" />
-        <Car id="car-2" color="red" top={car2Top} left="40%" />
-        <Car id="car-3" color="#26c5ff" top={car3Top} left="45%" />
+        {enemyCars.map((car) => (
+          <Car key={car.id} id={car.id} color={car.color} top={car.top} left={car.left} />
+        ))}
         {gameOver && (
           <div id="restart-div">
             <button id="restart" onClick={() => window.location.reload(true)}>
