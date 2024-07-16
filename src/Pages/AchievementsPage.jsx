@@ -68,6 +68,7 @@ export default function AchievementPage() {
     <>
       <Header />
       <h1 style={{textAlign:'center'}}>Achievements Page</h1>
+      <p style={{textAlign:'center'}}>Score more than 100 in games to unlock the achievement</p>
       <div style={{ padding: '20px',display:'flex',gap:10 }}>
       
         <GameCard title="Snake Game" score={scores[0]?.highestScore} />

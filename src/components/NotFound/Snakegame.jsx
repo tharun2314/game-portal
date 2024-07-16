@@ -281,6 +281,10 @@ this.props.handleNavigate();
           {route !== "menu" && <><Snake snakeDots={snakeDots} /><Food dot={food} /></>}
           {/* <div style={{ position: "relative", top: '-32px' }}>Score:{score}</div> */}
         </div>
+        <div>
+          <h4 style={{color:'white'}}>Snake Length:{this.state.snakeDots.length}</h4>
+          <h4 style={{color:'white'}}>Speed:{120-this.state.speed+10}</h4>
+        </div>
 
 
         {this.state.showQuiz && <QuestionModal onClose={this.closeModal} questionData={this.props.items?.questions[this.state.i]} />}

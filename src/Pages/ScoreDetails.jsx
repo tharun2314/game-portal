@@ -46,7 +46,7 @@ const UserScoreDetails = () => {
 
     },[])
   return (
-    <><Header /><div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+    <><div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
           <h2>Shared Score Results !!!!!!!!</h2>
           <Card sx={{ maxWidth: 345 }}>
               <CardHeader

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import $ from 'jquery'
 import Axios from '../Axios';
+import { blue } from '@mui/material/colors';
 
 const getRandomLeftPosition = (enemyCars) => {
   const container = $('#container-road');
@@ -221,9 +222,9 @@ const CarGame = () => {
           <Coin key={coin.id} id={coin.id} top={coin.top} left={coin.left} />
         ))}
         {gameOver && (
-          <div id="restart-div">
-            <h4>Game Over !!!!!!!</h4>
-            <button style={{ cursor: 'pointer' }} id="restart" onClick={() =>{handleScore(); navigate("/home")}}>
+          <div style={{display:'flex'}}id="restart-div">
+            <h4 style={{color:'white',fontSize:20}}>Game Over !!!!!!!</h4>
+            <button style={{ cursor: 'pointer',width:100,height:50 ,backgroundColorcolor:'blue'}} id="restart" onClick={() =>{handleScore(); navigate("/home")}}>
               Home
             </button>
           </div>
