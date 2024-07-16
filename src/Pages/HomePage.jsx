@@ -36,16 +36,16 @@ export default function HomePage() {
       <Sidebar />
       <Box sx={{ padding: 2, marginLeft: 30 }}>
         <Grid container spacing={2} sx={{ flexWrap: 'wrap' }}>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={4}>
             <BasicCard name="Snake Game" id="/snake-game" onClick={clickPlay} component={snake} />
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={3}>
             <BasicCard name="Shooter Game" id="/shooter-game" onClick={clickPlay} component={shooter} />
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={3} >
             <BasicCard name="Mario Jump" id="/mario-jump" onClick={clickPlay} component={mario} />
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={4} sm={6} md={3}>
             <BasicCard name="Car Game" id="/car-game" onClick={clickPlay} component={car} />
           </Grid>
           {open && <Gamelevel open={open} path={path} handleCloseModal={handleCloseModal} />}

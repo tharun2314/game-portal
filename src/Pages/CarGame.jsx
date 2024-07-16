@@ -129,12 +129,17 @@ const CarGame = () => {
           setShowQuiz(true);
           setCarSpeed((speed) => speed + 1);
           setLineSpeed((speed) => speed + 1);
+          setEnemyCars((prevCars) => [
+            ...prevCars,
+            { id: `car-${prevCars.length + 1}`, color: '#26c5ff', top: -350, left: getRandomLeftPosition(prevCars) }
+          ]);
+          
         }
 
         setEnemyCars((prevCars) => 
           prevCars.map(car => {
             if (car.top > 700) {
-              return { ...car, top: -60, left: getRandomLeftPosition(prevCars) };
+              return { ...car, top: -60, left: getRandomLeftPosition(prevCars), };
             } else {
               return { ...car, top: car.top + carSpeed };
             }

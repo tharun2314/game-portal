@@ -15,7 +15,11 @@ export default function MarioJump() {
         navigate("/home")
     }
     return (
-        <>  <Button variant="contained" style={{marginTop:50}} onClick={handleClose}>Close Game</Button>
+        <>  <div style={{display:"flex",flexDirection:'column'}}>
+            <h4 style={{textAlign:'center'}}>Press Enter to start the game</h4>
+            <Button variant="contained" style={{marginTop:50,width:100,height:50}} onClick={handleClose}>Close Game</Button>
+            </div>
+       
               <div class="game">
             
                 {!isPlay && <KeyMessage />}
