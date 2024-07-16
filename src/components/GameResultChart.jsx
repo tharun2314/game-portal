@@ -42,7 +42,7 @@ const GameResultChart = () => {
       .catch(() => {
         console.error("Failed to load graph results");
       });
-  },[]);
+  }, []);
 
   const options = {
     index: "y", // Swap axes for horizontal bar chart
@@ -57,6 +57,15 @@ const GameResultChart = () => {
         // reverse: true,
       },
     },
+    plugins: {
+      tooltip: {
+        callbacks: {
+          title: (context) => {
+            return lineChartData[context[0].dataIndex]?.game;
+          },
+        },
+      },
+    },
   };
 
   const chartData = {
@@ -64,7 +73,7 @@ const GameResultChart = () => {
     datasets: [
       {
         label: "Scores",
-        data: lineChartData,
+        data: lineChartData.map((x) => x.score),
         borderColor: "#36a2eb",
         backgroundColor: "#36a2eb",
       },
@@ -100,53 +109,56 @@ const GameResultChart = () => {
   };
 
   return (
-    <><Header /><div>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          marginTop: "20px",
-        }}
-      >
-        <Typography sx={{ display: "flex", fontSize: 30 }}>
-          Game results
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-around",
-          marginTop: "20px",
-        }}
-      >
-        <Box height={800} width={800}>
-          <Line data={chartData} options={options} />
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              marginTop: "10px",
-            }}
-          >
-            {" "}
-            <Typography>Last 10 games</Typography>
+    <>
+      <Header />
+      <div>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "20px",
+          }}
+        >
+          <Typography sx={{ display: "flex", fontSize: 30 }}>
+            Game results
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-around",
+            marginTop: "20px",
+          }}
+        >
+          <Box height={800} width={800}>
+            <Line data={chartData} options={options} />
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "10px",
+              }}
+            >
+              {" "}
+              <Typography>Last 10 games</Typography>
+            </Box>
+          </Box>
+          <Box height={400} width={400}>
+            <Pie data={pieData} options={pieOptions} />
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "10px",
+              }}
+            >
+              {" "}
+              <Typography>Overall games</Typography>
+            </Box>
           </Box>
         </Box>
-        <Box height={400} width={400}>
-          <Pie data={pieData} options={pieOptions} />
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              marginTop: "10px",
-            }}
-          >
-            {" "}
-            <Typography>Overall games</Typography>
-          </Box>
-        </Box>
-      </Box>
-    </div></>
+      </div>
+    </>
   );
 };
 
