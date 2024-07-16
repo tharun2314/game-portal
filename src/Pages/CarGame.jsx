@@ -45,6 +45,7 @@ const Coin = ({ id, top, left }) => (
 const CarGame = () => {
   const navigate = useNavigate();
   const items = useSelector(state => state.example.items);
+  console.log({items})
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [carSpeed, setCarSpeed] = useState(10);
@@ -111,6 +112,7 @@ const CarGame = () => {
 
   const closeModal = () => {
     setShowQuiz(false);
+    setI((prev)=>prev+1)
     window.addEventListener('keydown', handleKeyDown);
   };
 
@@ -125,7 +127,7 @@ const CarGame = () => {
     const intervalId = setInterval(() => {
       if (!gameOver && !showQuiz) {
         setScore((prevScore) => prevScore + 1);
-        if (score % 300 === 0) {
+        if (score % 200 === 0) {
           setShowQuiz(true);
           setCarSpeed((speed) => speed + 1);
           setLineSpeed((speed) => speed + 1);
@@ -188,6 +190,10 @@ const CarGame = () => {
     return !(b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2);
   };
 
+  useEffect(()=>{
+console.log(i)
+  },[i])
+
   useEffect(() => {
     if (!showQuiz) {
       const carElem = carRef.current;
@@ -208,6 +214,8 @@ const CarGame = () => {
       }
     }
   }, [enemyCars, coins, showQuiz]);
+
+  console.log("question number",i,items?.questions[i])
 
   return (
     <div className="App">

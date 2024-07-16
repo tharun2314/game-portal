@@ -9,11 +9,14 @@ const initialState = {
     switch (action.type) {
      
       case 'ADD':
+        console.log("i am heree")
         return {
+          ...state,
           items: action.payload
         };
         case 'LEVEL':
           return{
+            ...state,
             level:action.payload
           }
       default:

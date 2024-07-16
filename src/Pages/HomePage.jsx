@@ -33,7 +33,7 @@ export default function HomePage() {
     <Box sx={{ overflowX: 'hidden', padding: 0, margin: 0 }}>
       <Header />
       <Sidebar />
-      <Box sx={{ padding: 2, marginLeft: { xs: 0, md: 30 } }}>
+      <Box sx={{ padding: 2, marginLeft: { xs: 0, md: 30 },overflowY:'auto',height:`calc(100vh - 100px)` }}>
         <Grid container spacing={1}>
           <Grid item xs={12} sm={6} md={4} lg={3}>
             <BasicCard name="Snake Game" id="/snake-game" onClick={clickPlay} component={snake} />

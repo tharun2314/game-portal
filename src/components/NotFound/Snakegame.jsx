@@ -296,7 +296,8 @@ this.props.handleNavigate();
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = state =>
+ ({
   items: state.example.items,
   level:state.example.level
 });
