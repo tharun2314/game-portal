@@ -25,17 +25,18 @@ const Obstacles = () => {
   const obstacle2Ref = useRef();
 
   useEffect(() => {
-    setInterval(() => {
-      dispatch(obstacle1Height(obstacle1Ref.current.getBoundingClientRect().height));
-      dispatch(obstacle1Left(obstacle1Ref.current.getBoundingClientRect().left));
-      dispatch(obstacle1Top(obstacle1Ref.current.getBoundingClientRect().top));
-      dispatch(obstacle1Width(obstacle1Ref.current.getBoundingClientRect().width));
+    let interval=setInterval(() => {
+      dispatch(obstacle1Height(obstacle1Ref?.current?.getBoundingClientRect().height));
+      dispatch(obstacle1Left(obstacle1Ref?.current?.getBoundingClientRect().left));
+      dispatch(obstacle1Top(obstacle1Ref?.current?.getBoundingClientRect().top));
+      dispatch(obstacle1Width(obstacle1Ref?.current?.getBoundingClientRect().width));
 
-      dispatch(obstacle2Height(obstacle2Ref.current.getBoundingClientRect().height));
-      dispatch(obstacle2Left(obstacle2Ref.current.getBoundingClientRect().left));
-      dispatch(obstacle2Top(obstacle2Ref.current.getBoundingClientRect().top));
-      dispatch(obstacle2Width(obstacle2Ref.current.getBoundingClientRect().width));
+      dispatch(obstacle2Height(obstacle2Ref?.current?.getBoundingClientRect().height));
+      dispatch(obstacle2Left(obstacle2Ref?.current?.getBoundingClientRect().left));
+      dispatch(obstacle2Top(obstacle2Ref?.current?.getBoundingClientRect().top));
+      dispatch(obstacle2Width(obstacle2Ref?.current?.getBoundingClientRect().width));
     }, 100);
+    return ()=>clearInterval(interval)
   }, [dispatch]);
 
   useEffect(() => {

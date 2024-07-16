@@ -44,21 +44,13 @@ const AppRoutes = () => {
       <Route
         path="/shooter-game"
         element={
-          isAuthenticated() ? (
             <ShooterGameWrapper />
-          ) : (
-            <Navigate to="/login" replace />
-          )
         }
       />
       <Route
         path="/snake-game"
         element={
-          isAuthenticated() ? (
             <SnakeGamePage />
-          ) : (
-            <Navigate to="/login" replace />
-          )
         }
       />
       <Route path="/score-details/:id" element={<UserScoreDetails />} />

@@ -16,10 +16,21 @@ import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import snake from "../components/images/snake-image.png";
+import shooter from "../components/images/shooter.png";
+import mario from "../components/images/mario.png";
+import { Box } from '@mui/material';
+import car from "../components/images/car-game.png"
 import {
     useParams
   } from "react-router-dom";
   import Header from '../components/NotFound/Header';
+
+  const games={
+    1:snake,
+    2:shooter,
+    3:mario,
+    4:car
+  }
 const UserScoreDetails = () => {
     let { id } = useParams();
 
@@ -47,7 +58,7 @@ const UserScoreDetails = () => {
               <CardMedia
                   component="img"
                   height="194"
-                  image={snake}
+                  image={games[scores?.game_id]}
                   alt="Paella dish" />
               <CardContent>
                   <Typography variant="body2" color="text.secondary">

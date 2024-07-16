@@ -46,18 +46,18 @@ const Mario = () => {
   const score = useSelector(state => state.engine.score);
 
   // Jump audio
-  const jump = useMemo(() => {
-    return new Audio(jumpAudio);
-  }, []);
+  // const jump = useMemo(() => {
+  //   return new Audio(jumpAudio);
+  // }, []);
 
-  // Die
-  const marioDie = useMemo(() => {
-    return new Audio(dieAudio);
-  }, []);
+  // // Die
+  // const marioDie = useMemo(() => {
+  //   return new Audio(dieAudio);
+  // }, []);
 
-  const bgMusic = useMemo(() => {
-    return new Audio(backgroundMusic);
-  }, []);
+  // const bgMusic = useMemo(() => {
+  //   return new Audio(backgroundMusic);
+  // }, []);
 
   // Handling key press event.
   const handleKey = useCallback(
@@ -67,15 +67,15 @@ const Mario = () => {
       }
       if (mario_jump === false && e.code === "Space" && isPlay && !die && !loadingScreen) {
         dispatch(marioJumping(true));
-        jump.play();
+        // jump.play();
         setTimeout(() => {
           dispatch(marioJumping(false));
-          jump.pause();
-          jump.currentTime = 0;
+          // jump.pause();
+          // jump.currentTime = 0;
         }, 400);
       }
     },
-    [mario_jump, jump, dispatch, isPlay, die, loadingScreen]
+    [mario_jump, dispatch, isPlay, die, loadingScreen]
   );
 
   const handleScore=()=>{
@@ -94,7 +94,7 @@ const Mario = () => {
     ) {
       dispatch(setDie(true));
       handleScore()
-      marioDie.play();
+      // marioDie.play();
       dispatch(setReady(false));
       setTimeout(() => {
         dispatch(setDie(false));
@@ -112,7 +112,7 @@ const Mario = () => {
     ) {
       dispatch(setDie(true));
       handleScore()
-      marioDie.play();
+      // marioDie.play();
       dispatch(setReady(false));
       setTimeout(() => {
         dispatch(setDie(false));
@@ -131,7 +131,7 @@ const Mario = () => {
     obs1_height,
     mario_height,
     dispatch,
-    marioDie,
+    // marioDie,
     obs2_left,
     obs2_width,
     obs2_top,
@@ -147,12 +147,12 @@ const Mario = () => {
     dispatch(marioWidth(marioRef.current.getBoundingClientRect().width));
 
     if (isPlay) {
-      bgMusic.play();
+      // bgMusic.play();
     } else {
-      bgMusic.pause();
-      bgMusic.currentTime = 0;
+      // bgMusic.pause();
+      // bgMusic.currentTime = 0;
     }
-  }, [handleKey, dispatch, bgMusic, isPlay]);
+  }, [handleKey, dispatch, isPlay]);
 
   return (
     <div className="mario-container">

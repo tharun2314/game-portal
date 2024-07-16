@@ -4,6 +4,7 @@
 export const isAuthenticated = () => {
     const token = localStorage.getItem("token");
     // Check if a token exists and is not expired
+    console.log(token)
     console.log(token!=null)
     return token !=null;
   };
