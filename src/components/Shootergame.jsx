@@ -87,8 +87,6 @@ function Shootergame() {
             // score.current=parseInt(score.current)+1
             clearInterval(myInterval)
           setShowQuiz(true)
-        
-
         }
   
     }, 80);

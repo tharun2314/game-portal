@@ -1,35 +1,59 @@
 .sidebar {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 15%;
-    background-color:#25498E;
-    position: fixed;
-    height: 100%;
-    overflow: auto;
-    font-size: 22px;
-    text-align: center;
-  }
-  html, body, #root {
-    margin: 0;
-    padding: 0;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 15%;
+  background-color: #25498E;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  font-size: 22px;
+  text-align: center;
+  transition: width 0.3s ease;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.item a {
+  display: block;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+.item a.active {
+  background-color: #1E90FF;
+  color: white;
+}
+
+.item a:hover:not(.active) {
+  background-color: #1E90FF;
+  color: white;
+}
+
+/* Media query for smaller screens */
+@media screen and (max-width: 768px) {
+  .sidebar {
     width: 100%;
-    box-sizing: border-box;
+    max-width: 100%;
+    position: static; /* Ensure sidebar scrolls with content */
+    height: auto;
+    font-size: 18px;
+    text-align: left;
   }
-  
+
   .item a {
-    display: block;
-    color: white;
-    padding: 8px 16px;
-    text-decoration: none;
+    text-align: center;
+    padding: 10px;
+    border-top: 1px solid #1E90FF;
   }
-  
-  .item a.active {
-    background-color: #1E90FF;
-    color: white;
-  }
-  
+
   .item a:hover:not(.active) {
     background-color: #1E90FF;
-    color: white;
   }
+}
