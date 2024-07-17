@@ -45,7 +45,7 @@ const Coin = ({ id, top, left }) => (
 const CarGame = () => {
   const navigate = useNavigate();
   const items = useSelector(state => state.example.items);
-  console.log({items})
+  // console.log({items})
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [carSpeed, setCarSpeed] = useState(10);
@@ -175,6 +175,9 @@ const CarGame = () => {
   }
 
   const checkCollision = (car1, car2) => {
+    console.log("car1",car1)
+    console.log("car2",car2)
+    // debugger
     const x1 = car1.offsetLeft,
       y1 = car1.offsetTop,
       x2 = car2.offsetLeft,
@@ -190,9 +193,6 @@ const CarGame = () => {
     return !(b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2);
   };
 
-  useEffect(()=>{
-console.log(i)
-  },[i])
 
   useEffect(() => {
     if (!showQuiz) {
@@ -205,8 +205,16 @@ console.log(i)
       }
 
       if (carElem) {
+        console.log("ihere")
         coinElems.forEach((coin, index) => {
-          if (checkCollision(carElem, coin)) {
+          if (isCollision(carElem, coin,index)) {
+            console.log("collideddd....")
+                 setCarSpeed((speed) => speed + 20);
+                setLineSpeed((speed) => speed + 20);
+                setTimeout(()=>{
+                  setCarSpeed((speed) => speed -10);
+                  setLineSpeed((speed) => speed - 10);
+                },4000)
             setCoins((prevCoins) => prevCoins.filter((_, i) => i !== index));
             setScore((prevScore) => prevScore + 50);
           }
@@ -215,8 +223,32 @@ console.log(i)
     }
   }, [enemyCars, coins, showQuiz]);
 
-  console.log("question number",i,items?.questions[i])
+  // console.log("question number",i,items?.questions[i])
+  function isCollision(rectangularElement, coinElement,index) {
+    console.log("index........",index)
+    // Get dimensions and positions of the rectangular element
+    // debugger
+    const rectLeft = rectangularElement.offsetLeft;
+    const rectTop = rectangularElement.offsetTop;
+    const rectRight = rectLeft + rectangularElement.offsetWidth;
+    const rectBottom = rectTop + rectangularElement.offsetHeight;
 
+    // Get dimensions and positions of the coin element
+    const coinLeft = coinElement.offsetLeft;
+    const coinTop = coinElement.offsetTop;
+    const coinWidth = coinElement.offsetWidth;
+    const coinHeight = coinElement.offsetHeight;
+    const coinRight = coinLeft + coinWidth;
+    const coinBottom = coinTop + coinHeight;
+
+    // Check for collision
+    if (rectLeft < coinRight && rectRight > coinLeft &&
+        rectTop < coinBottom+40 && rectBottom > coinTop) {
+        return true; // Collision detected
+    } else {
+        return false; // No collision
+    }
+}
   return (
     <div className="App">
       <div id="score-div">
