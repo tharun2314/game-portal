@@ -127,15 +127,6 @@ const QuestionModal = ({
           
         <div style={{ display: "flex" }}>
           <Button
-            variant="outlined"
-            onClick={onClose}
-            sx={{
-              marginRight: "10px",
-            }}
-          >
-            Skip
-          </Button>
-          <Button
             variant="contained"
             color="primary"
             onClick={handleSubmit}

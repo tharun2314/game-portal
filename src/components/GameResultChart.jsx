@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Line, Pie } from "react-chartjs-2";
 import Header from "./NotFound/Header";
+import MultipleSelect from '../components/Dropdown.jsx';
 
 import {
   Chart as ChartJS,
@@ -27,22 +28,31 @@ ChartJS.register(
   Legend
 );
 
+const Games = {
+  'Snake': 1,
+  'Shooter': 2,
+  'Mario-Jump': 3,
+  'Car-Game': 4
+}
+
 const GameResultChart = () => {
   const [pieChartData, setPieChartData] = useState([]);
   const [lineChartData, setLineChartData] = useState([]);
+  const [games,setGames]=useState('Snake')
 
-  useEffect(() => {
-    Axios.get("/api/get-graph-data")
-      .then((res) => {
-        const { pieChartScores, lineChartScores } = res.data;
 
-        setPieChartData(pieChartScores);
-        setLineChartData(lineChartScores);
-      })
-      .catch(() => {
-        console.error("Failed to load graph results");
-      });
-  }, []);
+  // useEffect(() => {
+  //   Axios.get("/api/get-graph-data")
+  //     .then((res) => {
+  //       const { pieChartScores, lineChartScores } = res.data;
+
+  //       setPieChartData(pieChartScores);
+  //       setLineChartData(lineChartScores);
+  //     })
+  //     .catch(() => {
+  //       console.error("Failed to load graph results");
+  //     });
+  // }, []);
 
   const options = {
     index: "y", // Swap axes for horizontal bar chart
@@ -67,6 +77,25 @@ const GameResultChart = () => {
       },
     },
   };
+  const handleDropdownChange = (event) => {
+    const { target: { value } } = event;
+    console.log(value);
+    setGames(
+        typeof value === 'string' ? value.split(',') : value,
+    );
+};
+useEffect(()=>{
+  
+Axios.get(`/api/get-graph-data?top=10&game_id=${Games[games]}`).then(({ data }) => {
+  const { pieChartScores, lineChartScores } = data;
+
+  setPieChartData(pieChartScores);
+  setLineChartData(lineChartScores);
+}).catch(({ response }) => {
+  console.log(response.data.message);
+});
+
+},[games])
 
   const chartData = {
     labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -119,10 +148,13 @@ const GameResultChart = () => {
             marginTop: "20px",
           }}
         >
-          <Typography sx={{ display: "flex", fontSize: 30 }}>
+            <Typography sx={{ display: "flex", fontSize: 30 }}>
             Game results
           </Typography>
+          
         </Box>
+        <MultipleSelect items={['Snake', 'Shooter', 'Mario-Jump', 'Car-Game']} DropdownValue={games} DropdownName={`Game`} handleDropdownChange={handleDropdownChange} />
+        
         <Box
           sx={{
             display: "flex",
