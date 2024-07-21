@@ -7,6 +7,20 @@ import $ from 'jquery'
 import Axios from '../Axios';
 import { blue } from '@mui/material/colors';
 import BatteryChargingFullIcon from '@mui/icons-material/BatteryChargingFull';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+
+const LivesDisplay = ({ lives }) => {
+  // Create an array with the same length as lives
+  const livesArray = new Array(lives).fill(null);
+
+  return (
+    <div>
+      {livesArray.map((_, index) => (
+        <FavoriteIcon style={{color:'red'}} key={index} />
+      ))}
+    </div>
+  );
+};
 
 const getRandomLeftPosition = (enemyCars) => {
   const container = $('#container-road');
@@ -40,7 +54,7 @@ const Line = ({ id, top }) => (
 );
 
 const Coin = ({ id, top, left }) => (
-  <div className="coin" id={id} style={{ top, left,color:'blue' }}> <BatteryChargingFullIcon /></div>
+  <div className="coin" id={id} style={{ top, left,color:'#2832c2' }}> <BatteryChargingFullIcon /></div>
 
  
 );
@@ -68,6 +82,7 @@ const CarGame = () => {
   const [line1Top, setLine1Top] = useState(-150);
   const [line2Top, setLine2Top] = useState(150);
   const [line3Top, setLine3Top] = useState(450);
+  const [lives,setLives]=useState(3)
 
   const carRef = useRef(null);
   const containerRef = useRef(null);
@@ -203,6 +218,11 @@ const CarGame = () => {
       const enemyCarElems = enemyCars.map(car => document.getElementById(car.id));
       const coinElems = coins.map(coin => document.getElementById(coin.id));
 
+      if(lives < 1)
+      {
+        setGameOver(true)
+      }
+
       if (carElem && enemyCarElems.some(enemyCar => checkCollision(carElem, enemyCar))) {
         setGameOver(true);
       }
@@ -224,7 +244,7 @@ const CarGame = () => {
         });
       }
     }
-  }, [enemyCars, coins, showQuiz]);
+  }, [enemyCars, coins, showQuiz,lives]);
 
   // console.log("question number",i,items?.questions[i])
   function isCollision(rectangularElement, coinElement,index) {
@@ -252,12 +272,18 @@ const CarGame = () => {
         return false; // No collision
     }
 }
+
+const handleWrong=()=>{
+  setLives((prev)=>prev-1)
+}
   return (
     <div className="App">
       <div id="score-div">
         <span> Score :</span>
         <span id="score">{score}</span>
+     
       </div>
+      <div id="score-div1"> Lives <LivesDisplay lives={lives} />      </div>
       <div id="container-road" ref={containerRef}>
         <Line id="line-1" top={line1Top} />
         <Line id="line-2" top={line2Top} />
@@ -278,7 +304,7 @@ const CarGame = () => {
           </div>
         )}
       </div>
-      {showQuiz && <QuestionModal onClose={closeModal} questionData={items?.questions[i]} />}
+      {showQuiz && <QuestionModal onClose={closeModal} questionData={items?.questions[i]} handleWrong={handleWrong} />}
     </div>
   );
 };

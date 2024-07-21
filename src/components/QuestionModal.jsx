@@ -32,6 +32,7 @@ const QuestionModal = ({
   },
   onClose,
   maxSecs = 30,
+  handleWrong
 }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -84,6 +85,7 @@ const QuestionModal = ({
             onClose(1);
           },2000)
         } else {
+          handleWrong()
           toast.error("Wrong answer")
           setTimeout(()=>{
             onClose(0);

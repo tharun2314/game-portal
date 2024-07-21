@@ -45,6 +45,18 @@ body {
   box-shadow: 4px 4px 4px 1px #808080;
 }
 
+#score-div1{
+  position: absolute;
+  margin-top: 24%;
+  margin-left: 10%;
+  font-size: 25px;
+  background: white;
+  color: #454545;
+  padding: 15px;
+  box-shadow: 4px 4px 4px 1px #808080;
+}
+
+
 #score-div p {
   height: 20px;
 }
