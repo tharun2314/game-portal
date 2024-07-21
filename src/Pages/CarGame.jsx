@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import $ from 'jquery'
 import Axios from '../Axios';
 import { blue } from '@mui/material/colors';
+import BatteryChargingFullIcon from '@mui/icons-material/BatteryChargingFull';
 
 const getRandomLeftPosition = (enemyCars) => {
   const container = $('#container-road');
@@ -39,7 +40,9 @@ const Line = ({ id, top }) => (
 );
 
 const Coin = ({ id, top, left }) => (
-  <div className="coin" id={id} style={{ top, left }}></div>
+  <div className="coin" id={id} style={{ top, left,color:'blue' }}> <BatteryChargingFullIcon /></div>
+
+ 
 );
 
 const CarGame = () => {
